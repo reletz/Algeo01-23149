@@ -16,24 +16,19 @@ public class Main {
             scanner.nextLine(); // Consume newline
 
             switch (choice) {
+                //Selesai dipakai, kembali ke menu agar dapat digunakan kembali
                 case 1:
                     SPL.main(new String[0]);
-                    break;
                 case 2:
                     Determinan.main(new String[0]);
-                    break;
                 case 3:
                     MatriksBalikan.main(new String[0]);
-                    break;
                 case 4:
                     InterpolasiPolinom.main(new String[0]);
-                    break;
                 case 5:
                     InterpolasiBicubicSpline.main(new String[0]);
-                    break;
                 case 6:
                     RegresiBerganda.main(new String[0]);
-                    break;
                 case 7:
                     scanner.close();
                     return;

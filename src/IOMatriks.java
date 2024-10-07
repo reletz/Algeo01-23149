@@ -2,7 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-public class io{
+public class IOMatriks{
   //Spec: handle input keyboard, handle input file, handle output (print matrix)
   public static char[] convertTextToMatrix(String matrix){
     char matrixElement[] = matrix.toCharArray();
