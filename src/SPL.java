@@ -7,6 +7,7 @@ public class SPL {
     static void GaussJordan(){
 
     }
+    
     static void MatriksBalikan(){
 
     }

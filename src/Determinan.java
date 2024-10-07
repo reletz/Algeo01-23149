@@ -7,6 +7,7 @@ public class Determinan {
     static void GaussJordan(){
 
     }
+    
     static void MatriksBalikan(){
 
     }
