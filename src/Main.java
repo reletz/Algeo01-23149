@@ -13,7 +13,7 @@ public class Main {
             System.out.println("6. Regresi Linear dan Kuadratik Berganda");
             System.out.println("7. Keluar");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 //Selesai dipakai, kembali ke menu agar dapat digunakan kembali

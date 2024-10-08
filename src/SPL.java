@@ -62,7 +62,7 @@ public class SPL {
             System.out.println("4. Kaidah Cramer");
             System.out.println("5. Keluar");
             int choice = scanner.nextInt();
-            scanner.nextLine(); // Consume newline
+            scanner.nextLine();
 
             switch (choice) {
                 //Selesai dipakai, kembali ke menu agar dapat digunakan kembali

@@ -59,27 +59,24 @@ public class IOMatriks {
     }
 
     public static void writeMatrix(double[][] matrix) {
-        int i, j;
-        for (i = 0; i < matrix.length; i++) {
-            for (j = 0; j < matrix[i].length; j++) {
-                System.out.print(matrix[i][j] + " ");
+        for (double[] row : matrix) {
+            for (double element : row) {
+                System.out.printf("%6.3f", element);
             }
             System.out.println();
         }
     }
 
-    public static String getUserInput() {
-        Scanner scanner = new Scanner(System.in);
+    public static String getUserInput(Scanner scanner) {
         StringBuilder input = new StringBuilder();
         System.out.println("Masukkan matriks:");
-        while (true) {
+        while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             if (line.isEmpty()) {
                 break;
             }
             input.append(line).append("\n");
         }
-        scanner.close();
         return input.toString();
     }
 
