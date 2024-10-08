@@ -55,7 +55,7 @@ public class SPL {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("MENU:");
+            System.out.println("\nMENU:");
             System.out.println("1. Metode eliminasi Gauss");
             System.out.println("2. Metode eliminasi Gauss-Jordan");
             System.out.println("3. Metode matriks balikan");
@@ -68,18 +68,18 @@ public class SPL {
                 //Selesai dipakai, kembali ke menu agar dapat digunakan kembali
                 case 1:
                     SPL.Gauss();
-                    return;
+                    break;
                 case 2:
                     SPL.GaussJordan();
-                    return;
+                    break;
                 case 3:
                     SPL.MatriksBalikan();
-                    return;
+                    break;
                 case 4:
                     SPL.Cramer();
-                    return;
+                    break;
                 case 5:
-                    scanner.close();
+                    System.out.println("Kembali ke Menu Utama.");
                     return;
                 default:
                     System.out.println("Pilihan Invalid.");

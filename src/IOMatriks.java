@@ -1,5 +1,7 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class IOMatriks {
@@ -79,6 +81,16 @@ public class IOMatriks {
         }
         scanner.close();
         return input.toString();
+    }
+
+    public static void saveToFile(String text, String filename) {
+        try {
+            FileWriter writer = new FileWriter(filename);
+            writer.write(text);
+            writer.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
     // Usage Example
