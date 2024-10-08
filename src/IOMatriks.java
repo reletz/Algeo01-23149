@@ -61,7 +61,7 @@ public class IOMatriks {
     public static void writeMatrix(double[][] matrix) {
         for (double[] row : matrix) {
             for (double element : row) {
-                System.out.printf("%6.3f", element);
+                System.out.printf("%8.3f", element);
             }
             System.out.println();
         }

@@ -11,11 +11,13 @@ public class MatriksBalikan {
         double[][] matrixInverse = new double[matrix.length][matrix[0].length];
         if (function == "balikan") {
             matrixInverse = matriksBalikan(matrix);
+            System.out.println("Invers Matriks: ");
             IOMatriks.writeMatrix(matrixInverse);
         }
 
         if (function == "adjoin") {
             matrixInverse = matriksAdjoin(matrix);
+            System.out.println("Invers Matriks: ");
             IOMatriks.writeMatrix(matrixInverse);
         }
     }
@@ -84,10 +86,11 @@ public class MatriksBalikan {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("\nMENU:");
+            System.out.println("\nMENU MATRIKS BALIKAN:");
             System.out.println("1. Metode Matriks Balikan");
             System.out.println("2. Metode Adjoin");
             System.out.println("3. Keluar");
+            System.out.print("\nMasukkan pilihan: ");
 
             int choice = scanner.nextInt();
             scanner.nextLine();
@@ -97,16 +100,21 @@ public class MatriksBalikan {
 
             switch (choice) {
                 case 1:
+                    Main.clearConsole();
+                    System.out.println("Metode Matriks Balikan");
                     inputMatrixText = IOMatriks.getUserInput(scanner);
                     inputMatrix = IOMatriks.convertTextToMatrix(inputMatrixText);
                     getInvers(inputMatrix, "balikan");
                     break;
                 case 2:
+                    Main.clearConsole();
+                    System.out.println("Metode Adjoin");
                     inputMatrixText = IOMatriks.getUserInput(scanner);
                     inputMatrix = IOMatriks.convertTextToMatrix(inputMatrixText);
                     getInvers(inputMatrix, "adjoin");
                     break;
                 case 3:
+                    Main.clearConsole();
                     System.out.println("Kembali ke Menu Utama.");
                     return;
                 default:
