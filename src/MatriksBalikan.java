@@ -1,28 +1,29 @@
 import java.util.Scanner;
+
 public class MatriksBalikan {
     public static void getInvers(double[][] matrix, String function) {
-        // Placeholder = 0
-        // double det = 0;
+        double det = getDeterminan(matrix);
 
-        // if (det == 0) {
-        //     System.out.println("Matriks tidak memiliki invers.");
-        // }
+        if (det == 0) {
+            System.out.println("Matriks tidak memiliki invers.");
+            return;
+        }
 
         double[][] matrixInverse = new double[matrix.length][matrix[0].length];
-        if (function == "balikan") {
-            matrixInverse = matriksBalikan(matrix);
+        if (function.equals("balikan")) {
+            matrixInverse = inversBalikan(matrix);
             System.out.println("Invers Matriks: ");
             IOMatriks.writeMatrix(matrixInverse);
         }
 
-        if (function == "adjoin") {
-            matrixInverse = matriksAdjoin(matrix);
+        if (function.equals("adjoin")) {
+            matrixInverse = inversAdjoin(matrix);
             System.out.println("Invers Matriks: ");
             IOMatriks.writeMatrix(matrixInverse);
         }
     }
 
-    public static double[][] matriksBalikan(double[][] matrix) {
+    public static double[][] inversBalikan(double[][] matrix) {
         int n = matrix.length;
         
         // Matriks gabungan (A | I)
@@ -43,21 +44,41 @@ public class MatriksBalikan {
             // Mencari elemen utama
             double elmtUtama = augmentedMatrix[i][i];
             if (elmtUtama == 0) {
-                return null; // Matriks tidak dapat diinvers
+                // Cari baris di bawah yang memiliki elemen utama tidak nol
+                boolean found = false;
+                for (int k = i + 1; k < n; k++) {
+                    if (augmentedMatrix[k][i] != 0) {
+                        // Tukar baris
+                        swapRows(augmentedMatrix, i, k);
+                        elmtUtama = augmentedMatrix[i][i];
+                        found = true;
+                        break;
+                    }
+                }
+                if (!found) {
+                    // Jika tidak ditemukan, coba operasi baris lainnya
+                    for (int k = i + 1; k < n; k++) {
+                        if (augmentedMatrix[k][i] != 0) {
+                            // Tambahkan kelipatan baris
+                            addMultipleOfRow(augmentedMatrix, i, k, 1);
+                            elmtUtama = augmentedMatrix[i][i];
+                            if (elmtUtama != 0) {
+                                found = true;
+                                break;
+                            }
+                        }
+                    }
+                }
             }
 
             // Membagi baris dengan elemen utama
-            for (int j = 0; j < 2 * n; j++) {
-                augmentedMatrix[i][j] /= elmtUtama;
-            }
+            multiplyRow(augmentedMatrix, i, 1 / elmtUtama);
 
             // Mengeliminasi elemen di bawah dan di atas 1 utama
             for (int k = 0; k < n; k++) {
                 if (k != i) {
                     double elmt = augmentedMatrix[k][i];
-                    for (int j = 0; j < 2 * n; j++) {
-                        augmentedMatrix[k][j] -= elmt * augmentedMatrix[i][j];
-                    }
+                    addMultipleOfRow(augmentedMatrix, k, i, -elmt);
                 }
             }
         }
@@ -73,14 +94,112 @@ public class MatriksBalikan {
         return matriksInverse;
     }
 
-    public static double[][] matriksAdjoin(double[][] matrix) {
-        double[][] matrixInverse = new double[1][1];
-
-        return matrixInverse;
+    public static void swapRows(double[][] matrix, int row1, int row2) {
+        double[] temp = matrix[row1];
+        matrix[row1] = matrix[row2];
+        matrix[row2] = temp;
     }
 
-    public static void getAdjoin(double[][] matrix) {
-        
+    public static void multiplyRow(double[][] matrix, int row, double koefisien) {
+        for (int j = 0; j < matrix[row].length; j++) {
+            matrix[row][j] *= koefisien;
+        }
+    }
+
+    public static void addMultipleOfRow(double[][] matrix, int rowTujuan, int rowAsal, double koefisien) {
+        for (int j = 0; j < matrix[rowTujuan].length; j++) {
+            matrix[rowAsal][j] += koefisien * matrix[rowAsal][j];
+        }
+    }
+
+    public static double[][] inversAdjoin(double[][] matrix) {
+        int n = matrix.length;
+        double[][] matrixInvers = new double[n][n];
+
+        matrixInvers = getMatriksKofaktor(matrix);
+        matrixInvers = transpose(matrixInvers);
+
+        double det = getDeterminan(matrix);
+        double koefisien = 1 / det;
+        matrixInvers = multiplyByCoef(matrixInvers, koefisien);
+
+        return matrixInvers;
+    }
+
+    public static double[][] multiplyByCoef(double[][] matrix, double koefisien) {
+        int n = matrix.length;
+        double[][] multipliedMatrix = new double[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                multipliedMatrix[i][j] = matrix[i][j] * koefisien;
+            }
+        }
+
+        return multipliedMatrix;
+    }
+
+    public static double[][] getMatriksKofaktor(double[][] matrix) {
+        int n = matrix.length;
+        double[][] matrixKofaktor = new double[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                matrixKofaktor[i][j] = getKofaktor(matrix, i, j);
+            }
+        }
+
+        return matrixKofaktor;
+    }
+
+    public static double getKofaktor(double[][] matrix, int x, int y) {
+        int n = matrix.length;
+        double[][] kofaktor = new double[n - 1][n - 1];
+        int kofaktor_I = 0;
+
+        for (int i = 0; i < n; i++) {
+            if (i == x) continue;
+            int kofaktor_J = 0;
+            for (int j = 0; j < n; j++) {
+                if (j == y) continue;
+                kofaktor[kofaktor_I][kofaktor_J] = matrix[i][j];
+                kofaktor_J++;
+            }
+            kofaktor_I++;
+        }
+
+        double det = getDeterminan(kofaktor);
+        int sign = ((x + y) % 2 == 0) ? 1 : -1;
+        return sign * det;
+    }
+
+    public static double[][] transpose(double[][] matrix) {
+        int n = matrix.length;
+        double[][] transposedMatrix = new double[n][n];
+
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                transposedMatrix[i][j] = matrix[j][i];
+            }
+        }
+
+        return transposedMatrix;
+    }
+
+    public static double getDeterminan(double[][] matrix) {
+        int n = matrix.length;
+        if (n == 1) {
+            return matrix[0][0];
+        }
+        if (n == 2) {
+            return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
+        }
+
+        double determinan = 0;
+        for (int j = 0; j < n; j++) {
+            determinan += matrix[0][j] * getKofaktor(matrix, 0, j);
+        }
+        return determinan;
     }
 
     public static void main(String[] args) {
