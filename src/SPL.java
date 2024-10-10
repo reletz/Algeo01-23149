@@ -16,7 +16,42 @@ public class SPL {
     }
 
     public static void main(String[] args) {
+<<<<<<< HEAD
 
+=======
+        Scanner scanner = new Scanner(System.in);
+        while (true) {
+            System.out.println("\nMENU:");
+            System.out.println("1. Metode eliminasi Gauss");
+            System.out.println("2. Metode eliminasi Gauss-Jordan");
+            System.out.println("3. Metode matriks balikan");
+            System.out.println("4. Kaidah Cramer");
+            System.out.println("5. Keluar");
+            int choice = scanner.nextInt();
+            scanner.nextLine();
+
+            switch (choice) {
+                //Selesai dipakai, kembali ke menu agar dapat digunakan kembali
+                case 1:
+                    SPL.Gauss();
+                    break;
+                case 2:
+                    SPL.GaussJordan();
+                    break;
+                case 3:
+                    SPL.MatriksBalikan();
+                    break;
+                case 4:
+                    SPL.Cramer();
+                    break;
+                case 5:
+                    System.out.println("Kembali ke Menu Utama.");
+                    return;
+                default:
+                    System.out.println("Pilihan Invalid.");
+            }
+        }
+>>>>>>> de324732637fbf3dbbb8aea271c682a3a394d03f
     }
 }
 
