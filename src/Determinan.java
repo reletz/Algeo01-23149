@@ -1,18 +1,14 @@
 import java.util.Scanner;
 
-import org.w3c.dom.css.Counter;
 public class Determinan {
     public static double getDeterminan(double[][] matrix, String function) {
         double detResult = 1;
         if (function.equals("gauss")) {
-            detResult = determinanGauss(matrix);
-            System.out.println("Determinan Matriks: ");
-            return detResult;
+            return determinanGauss(matrix);
         } 
 
         if (function.equals("Kofaktor")) {
-            detResult = determinanKofaktor(matrix);
-            System.out.println("Determinan Matriks: ");
+            // return determinanKofaktor(matrix);
             return detResult;
         }
         return detResult;
@@ -29,29 +25,14 @@ public class Determinan {
             }
         }
         double determinan = 1;
-        int counterSwap = 0;
+        // int counterSwap = 0;
 
         // Operasi Baris Elemneter (OBE)
+        tmpMatrix = OBE.toReducedRowEchelon(tmpMatrix);
         for (int i = 0; i < n; i++) {
-            // Mencari elemen utama
-            double mainElement = tmpMatrix[i][i];
-            if (mainElement == 0) {
-                // Cari baris di bawah elemen utama yang tidak nol
-                boolean found = false;
-                for (int j = i + 1; j < n; j++) {
-                    if (tmpMatrix[j][i] != 0) {
-                        // Menukar baris
-                        swapRow(tmpMatrix, i, j);
-                        mainElement = tmpMatrix[i][i];
-                        found = true;
-                        CounterSwap++;
-                        break;
-                    }
-                }
-                
-            }
+            determinan *= tmpMatrix[i][i];
         }
-
+        return determinan;
     }
     
     static void getKofaktor(){
