@@ -42,6 +42,20 @@ public class IOMatriks {
         return matrix;
     }
 
+    public static String convertMatrixToText(double[][] matrix) {
+        StringBuilder text = new StringBuilder();
+        for (double[] row : matrix) {
+            for (int j = 0; j < row.length; j++) {
+                text.append(row[j]);
+                if (j < row.length - 1) {
+                    text.append(" ");
+                }
+            }
+            text.append("\n");
+        }
+        return text.toString();
+    }
+
     public static double[][] readFile(String filename) {
         StringBuilder text = new StringBuilder();
         try {
@@ -80,14 +94,35 @@ public class IOMatriks {
         return convertTextToMatrix(text.toString());
     }
 
-    public static void saveToFile(String text, String filename) {
-        try {
-            FileWriter writer = new FileWriter(filename);
-            writer.write(text);
-            writer.close();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+    public static void saveToFile(String text, Scanner scanner) {
+        System.out.println("\nSimpan Hasil ke File?");
+        System.out.println("1. Ya");
+        System.out.println("2. Tidak");
+        System.out.print("Masukkan pilihan: ");
+
+        int simpanChoice = scanner.nextInt();
+        scanner.nextLine();
+
+        switch (simpanChoice) {
+            case 1:
+                System.out.print("Masukkan nama file tujuan: ");
+                String filename = scanner.nextLine();
+
+                try {
+                    FileWriter writer = new FileWriter(filename);
+                    writer.write(text);
+                    writer.close();
+                    Main.clearConsole();
+                    System.out.println("Berhasil menyimpan ke file.");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
+            case 2:
+                break;
+            default:
+                break;
+        }   
     }
 
     // Usage Example

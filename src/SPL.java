@@ -1,3 +1,5 @@
+import java.util.Scanner;
+
 public class SPL {
     static void gauss(){
 
@@ -16,9 +18,6 @@ public class SPL {
     }
 
     public static void main(String[] args) {
-<<<<<<< HEAD
-
-=======
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\nMENU:");
@@ -33,16 +32,16 @@ public class SPL {
             switch (choice) {
                 //Selesai dipakai, kembali ke menu agar dapat digunakan kembali
                 case 1:
-                    SPL.Gauss();
+                    SPL.gauss();
                     break;
                 case 2:
-                    SPL.GaussJordan();
+                    SPL.gaussJordan();
                     break;
                 case 3:
-                    SPL.MatriksBalikan();
+                    SPL.matriksBalikan();
                     break;
                 case 4:
-                    SPL.Cramer();
+                    SPL.cramer();
                     break;
                 case 5:
                     System.out.println("Kembali ke Menu Utama.");
@@ -51,7 +50,6 @@ public class SPL {
                     System.out.println("Pilihan Invalid.");
             }
         }
->>>>>>> de324732637fbf3dbbb8aea271c682a3a394d03f
     }
 }
 

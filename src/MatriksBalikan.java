@@ -1,26 +1,21 @@
 import java.util.Scanner;
 
 public class MatriksBalikan {
-    public static void getInvers(double[][] matrix, String function) {
-        double det = getDeterminan(matrix);
-
-        if (det == 0) {
-            System.out.println("Matriks tidak memiliki invers.");
-            return;
-        }
-
+    public static double[][] getInvers(double[][] matrix, String function) {
         double[][] matrixInverse = new double[matrix.length][matrix[0].length];
+
         if (function.equals("balikan")) {
             matrixInverse = inversBalikan(matrix);
             System.out.println("Invers Matriks: ");
-            IOMatriks.writeMatrix(matrixInverse);
+            return matrixInverse;
         }
 
         if (function.equals("adjoin")) {
             matrixInverse = inversAdjoin(matrix);
             System.out.println("Invers Matriks: ");
-            IOMatriks.writeMatrix(matrixInverse);
+            return matrixInverse;
         }
+        return matrixInverse;
     }
 
     public static double[][] inversBalikan(double[][] matrix) {
@@ -206,28 +201,97 @@ public class MatriksBalikan {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             System.out.println("\nMENU MATRIKS BALIKAN:");
-            System.out.println("1. Metode Matriks Balikan");
+            System.out.println("1. Metode OBE");
             System.out.println("2. Metode Adjoin");
             System.out.println("3. Keluar");
             System.out.print("\nMasukkan pilihan: ");
 
             int choice = scanner.nextInt();
+            int subChoice;
             scanner.nextLine();
 
             double[][] inputMatrix;
+            double[][] outputMatrix;
+            String outputMatrixText;
 
             switch (choice) {
                 case 1:
                     Main.clearConsole();
-                    System.out.println("Metode Matriks Balikan");
-                    inputMatrix = IOMatriks.getUserInput(scanner);
-                    getInvers(inputMatrix, "balikan");
+                    System.out.println("METODE OBE\n");
+                    System.out.println("Pilihan Input");
+                    System.out.println("1. Keyboard");
+                    System.out.println("2. File");
+                    System.out.print("Masukkan pilihan: ");
+                    
+                    subChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    switch (subChoice) {
+                        case 1:
+                            Main.clearConsole();
+                            System.out.println("METODE OBE\n");
+                            inputMatrix = IOMatriks.getUserInput(scanner);
+                            outputMatrix = getInvers(inputMatrix, "balikan");
+                            outputMatrixText = IOMatriks.convertMatrixToText(outputMatrix);
+                            System.out.println("Matriks Balikan:");
+                            IOMatriks.writeMatrix(outputMatrix);
+                            IOMatriks.saveToFile(outputMatrixText, scanner);
+                            break;
+                        case 2:
+                            Main.clearConsole();
+                            System.out.println("METODE OBE\n");
+                            System.out.print("Masukkan file path: ");
+                            String filePath = scanner.nextLine();
+                            inputMatrix = IOMatriks.readFile(filePath);
+                            outputMatrix = getInvers(inputMatrix, "balikan");
+                            outputMatrixText = IOMatriks.convertMatrixToText(outputMatrix);
+                            System.out.println("Matriks Balikan:");
+                            IOMatriks.writeMatrix(outputMatrix);
+                            IOMatriks.saveToFile(outputMatrixText, scanner);
+                            break;
+                        default:
+                            System.out.println("Pilihan invalid!");
+                            break;
+                    }
                     break;
                 case 2:
                     Main.clearConsole();
-                    System.out.println("Metode Adjoin");
-                    inputMatrix = IOMatriks.getUserInput(scanner);
-                    getInvers(inputMatrix, "adjoin");
+                    System.out.println("METODE ADJOIN\n");
+                    System.out.println("Pilihan Input");
+                    System.out.println("1. Keyboard");
+                    System.out.println("2. File");
+                    System.out.print("Masukkan pilihan: ");
+
+                    subChoice = scanner.nextInt();
+                    scanner.nextLine();
+
+                    switch (subChoice) {
+                        case 1:
+                            Main.clearConsole();
+                            System.out.println("METODE ADJOIN\n");
+                            inputMatrix = IOMatriks.getUserInput(scanner);
+                            outputMatrix = getInvers(inputMatrix, "adjoin");
+                            outputMatrixText = IOMatriks.convertMatrixToText(outputMatrix);
+                            System.out.println("Matriks Balikan:");
+                            IOMatriks.writeMatrix(outputMatrix);
+                            IOMatriks.saveToFile(outputMatrixText, scanner);
+                            break;
+                        case 2:
+                            Main.clearConsole();
+                            System.out.println("METODE ADJOIN\n");
+                            System.out.print("Masukkan file path: ");
+                            String filePath = scanner.nextLine();
+                            inputMatrix = IOMatriks.readFile(filePath);
+                            outputMatrix = getInvers(inputMatrix, "adjoin");
+                            outputMatrixText = IOMatriks.convertMatrixToText(outputMatrix);
+                            System.out.println("Matriks Balikan:");
+                            IOMatriks.writeMatrix(outputMatrix);
+                            IOMatriks.saveToFile(outputMatrixText, scanner);
+                            break;
+                        default:
+                            System.out.println("Pilihan invalid!");
+                            break;
+                    }
                     break;
                 case 3:
                     Main.clearConsole();
