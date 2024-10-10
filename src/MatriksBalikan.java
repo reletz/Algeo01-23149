@@ -214,22 +214,19 @@ public class MatriksBalikan {
             int choice = scanner.nextInt();
             scanner.nextLine();
 
-            String inputMatrixText;
             double[][] inputMatrix;
 
             switch (choice) {
                 case 1:
                     Main.clearConsole();
                     System.out.println("Metode Matriks Balikan");
-                    inputMatrixText = IOMatriks.getUserInput(scanner);
-                    inputMatrix = IOMatriks.convertTextToMatrix(inputMatrixText);
+                    inputMatrix = IOMatriks.getUserInput(scanner);
                     getInvers(inputMatrix, "balikan");
                     break;
                 case 2:
                     Main.clearConsole();
                     System.out.println("Metode Adjoin");
-                    inputMatrixText = IOMatriks.getUserInput(scanner);
-                    inputMatrix = IOMatriks.convertTextToMatrix(inputMatrixText);
+                    inputMatrix = IOMatriks.getUserInput(scanner);
                     getInvers(inputMatrix, "adjoin");
                     break;
                 case 3:

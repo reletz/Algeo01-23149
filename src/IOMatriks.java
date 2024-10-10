@@ -67,17 +67,17 @@ public class IOMatriks {
         }
     }
 
-    public static String getUserInput(Scanner scanner) {
-        StringBuilder input = new StringBuilder();
+    public static double[][] getUserInput(Scanner scanner) {
+        StringBuilder text = new StringBuilder();
         System.out.println("Masukkan matriks:");
         while (scanner.hasNextLine()) {
             String line = scanner.nextLine();
             if (line.isEmpty()) {
                 break;
             }
-            input.append(line).append("\n");
+            text.append(line).append("\n");
         }
-        return input.toString();
+        return convertTextToMatrix(text.toString());
     }
 
     public static void saveToFile(String text, String filename) {
@@ -92,17 +92,5 @@ public class IOMatriks {
 
     // Usage Example
     public static void main(String[] args) {
-        // String filename = "example.txt";
-        // double[][] matrix = readFile(filename);
-        // System.out.println("Matrix read from file:");
-        // writeMatrix(matrix);
-        
-        // String input = "3 4.5 2.8 10 12\n-3 7 8.3 11 -4\n0.5 -10 -9 12 0\n";
-        // String input = getUserInput();
-
-        // double[][] matrix = convertTextToMatrix(input);
-
-        // System.out.println("Matrix from input string:");
-        // writeMatrix(matrix);
     }
 }
