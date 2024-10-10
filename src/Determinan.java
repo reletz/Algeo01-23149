@@ -8,11 +8,11 @@ public class Determinan {
 
     }
     
-    static void MatriksBalikan(){
+    static void MetodeKofaktor(){
 
     }
 
-    static void Cramer(){
+    static void MetodeSarrus(){
 
     }
 
@@ -21,10 +21,8 @@ public class Determinan {
         while (true) {
             System.out.println("MENU:");
             System.out.println("1. Metode eliminasi Gauss");
-            System.out.println("2. Metode eliminasi Gauss-Jordan");
-            System.out.println("3. Metode matriks balikan");
-            System.out.println("4. Kaidah Cramer");
-            System.out.println("5. Keluar");
+            System.out.println("2. Metode Kofaktor");
+            System.out.println("3. Keluar");
             int choice = scanner.nextInt();
             scanner.nextLine(); // Consume newline
 
@@ -37,10 +35,10 @@ public class Determinan {
                     Determinan.GaussJordan();
                     return;
                 case 3:
-                    Determinan.MatriksBalikan();
+                    Determinan.MetodeKofaktor();
                     return;
                 case 4:
-                    Determinan.Cramer();
+                    Determinan.MetodeSarrus();
                     return;
                 case 5:
                     scanner.close();
