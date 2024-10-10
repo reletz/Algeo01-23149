@@ -119,6 +119,7 @@ public class IOMatriks {
                 }
                 break;
             case 2:
+                Main.clearConsole();
                 break;
             default:
                 break;
