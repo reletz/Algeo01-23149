@@ -1,5 +1,23 @@
 public class OBE {
     static final int IDX_UNDEF = -1;
+
+    //Ubah matrix ke augmented matrix
+    public static double[][] toAugmented(double[][] squareMatrix, double[][] rhs){
+        int i, j;
+        int m = squareMatrix.length;
+        int n1 = squareMatrix[0].length;
+        int n2 = rhs[0].length;
+
+        double[][] augmentedMatrix = new double[squareMatrix.length][n1+n2];
+        for (i = 0; i < m; i++) {
+            for (j = 0; j < n1; j++) {
+                augmentedMatrix[i][j] = squareMatrix[i][j];
+            }
+            for (j = 0; j < n2; j++){
+                augmentedMatrix[i][j + n1] = rhs[i][j];
+            }
+        } return augmentedMatrix;
+    }
   
     // 1: Mengalikan baris dengan suatu konstanta non-zero 
     // Objektif: Agar memiliki 1 utama di [targetedRow][targetedCol]
@@ -87,6 +105,8 @@ public class OBE {
     }
   
     // Usage Example
+
     public static void main(String[] args) {
+
     }
-  }
+}

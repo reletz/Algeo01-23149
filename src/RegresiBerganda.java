@@ -1,18 +1,18 @@
 import java.util.Scanner;
 public class RegresiBerganda {
-    static void Gauss(){
+    static void gauss(){
 
     }
 
-    static void GaussJordan(){
+    static void gaussJordan(){
 
     }
     
-    static void MatriksBalikan(){
+    static void matriksBalikan(){
 
     }
 
-    static void Cramer(){
+    static void cramer(){
 
     }
 
@@ -31,16 +31,16 @@ public class RegresiBerganda {
             switch (choice) {
                 //Selesai dipakai, kembali ke menu agar dapat digunakan kembali
                 case 1:
-                    RegresiBerganda.Gauss();
+                    RegresiBerganda.gauss();
                     return;
                 case 2:
-                    RegresiBerganda.GaussJordan();
+                    RegresiBerganda.gaussJordan();
                     return;
                 case 3:
-                    RegresiBerganda.MatriksBalikan();
+                    RegresiBerganda.matriksBalikan();
                     return;
                 case 4:
-                    RegresiBerganda.Cramer();
+                    RegresiBerganda.cramer();
                     return;
                 case 5:
                     scanner.close();
