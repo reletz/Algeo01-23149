@@ -16,49 +16,66 @@ public class SPL {
         }
 
         return x;
-    }
+    }  
     
+    //Input: Augmented Matrix
     static double[] gauss(double[][] matrix){
         OBE.toRowEchelon(matrix);
         return BackSubstitution(matrix);
     }
 
+    //Input: Augmented Matrix
     static double[] gaussJordan(double[][] matrix){
         OBE.toReducedRowEchelon(matrix);
         return BackSubstitution(matrix);
     }
 
-    static void matriksBalikan(double[][] matrix){
-
+    //Input: Augmented Matrix
+    static double[] matriksBalikan(double[][] matrix){
+        int i;
+        double[][][] spliitedMatrix = OBE.splitMatrix(matrix);
+        double[][] lhs = spliitedMatrix[0];
+        double[][] rhs = spliitedMatrix[1];
+        double[][] lhsInvers = MatriksBalikan.inversBalikan(lhs);
+        double[][] x = OBE.multiplyMatrix(MatriksBalikan.inversBalikan(lhs), rhs);
+        double[] result = new double[x.length];
+        for (i = 0; i < x.length; i++){
+            result[i] = x[i][0];
+        } return result;
     }
 
+    //Input: Augmented Matrix
     static void cramer(){
 
     }
 
     public static void main(String[] args) {
         // Example usage
-        double[][] matrix = {
-            {2, -1, 0},
-            {-1, 2, -1},
-            {0, -1, 2}
-        };
+        // double[][] matrix = {
+        //     {2, -1, 0},
+        //     {-1, 2, -1},
+        //     {0, -1, 2}
+        // };
 
-        double[][] rhs = {{1}, {0}, {1}};
-        double[][] newMatrix = OBE.toAugmented(matrix, rhs);
-        IOMatriks.writeMatrix(newMatrix);
+        // double[][] rhs = {{1}, {0}, {1}};
+        // double[][] newMatrix = OBE.toAugmented(matrix, rhs);
+        // IOMatriks.writeMatrix(newMatrix);
 
-        double[] solution1 = gauss(newMatrix);
-        double[] solution2 = gaussJordan(newMatrix);
+        // double[] solution1 = gauss(newMatrix);
+        // double[] solution2 = gaussJordan(newMatrix);
+        // double[] solution3 = matriksBalikan(newMatrix);
 
-        // Print the solution
-        for (double x : solution1) {
-            System.out.println(x);
-        }
+        // for (double x : solution1) {
+        //     System.out.print(x + " ");
+        // } System.out.println("");
 
-        for (double x : solution2) {
-            System.out.println(x);
-        }
+        // for (double x : solution2) {
+        //     System.out.print(x + " ");
+        // } System.out.println("");
+
+        // for (double x : solution3) {
+        //     System.out.print(x + " ");
+        // } System.out.println("");
     }
 }
 //     public static void main(String[] args) {

@@ -1,6 +1,23 @@
 public class OBE {
     static final int IDX_UNDEF = -1;
 
+    //Perkalian antar dua matrix
+    public static double[][] multiplyMatrix(double[][] matrix1, double[][] matrix2){
+        int i, j, k, meetPoint;
+        double temp;
+        int mResult = matrix1.length;
+        int nResult = matrix2[0].length;
+        double[][] resultMatrix = new double[mResult][nResult];
+        meetPoint = matrix1[0].length;
+        for (i = 0; i < mResult; i++){
+            for (j = 0; j < nResult; j++){
+                temp = 0;
+                for (k = 0; k < meetPoint; k++){
+                    temp += (matrix1[i][k] * matrix2[k][j]);
+                } resultMatrix[i][j] = temp;
+            }
+        } return resultMatrix;
+    }
     //Ubah matrix ke augmented matrix
     public static double[][] toAugmented(double[][] squareMatrix, double[][] rhs){
         int i, j;
@@ -17,6 +34,23 @@ public class OBE {
                 augmentedMatrix[i][j + n1] = rhs[i][j];
             }
         } return augmentedMatrix;
+    }
+
+    //pecah matrix ke lhs dan rhs
+    public static double[][][] splitMatrix(double[][] augmentedMatrix){
+        int i, j;
+        int m = augmentedMatrix.length;
+        int n = augmentedMatrix[0].length;
+
+        double[][] lhs = new double[m][n-1];
+        double[][] rhs = new double[m][1];
+        for (i = 0; i < m; i++){
+            for (j = 0; j < n-1; j++){
+                lhs[i][j] = augmentedMatrix[i][j];
+            }   rhs[i][0] = augmentedMatrix[i][n-1];
+        } 
+        double[][][] result = {lhs, rhs};
+        return result;
     }
   
     // 1: Mengalikan baris dengan suatu konstanta non-zero 
