@@ -32,7 +32,7 @@ public class MatriksBalikan {
     }
 
     public static double[][] inversAdjoin(double[][] matrix) {
-        double[][] matrixInvers = transpose(getMatriksKofaktor(matrix));
+        double[][] matrixInvers = OBE.transpose(getMatriksKofaktor(matrix));
         double det = getDeterminan(matrix);
         return multiplyByCoef(matrixInvers, 1 / det);
     }
@@ -76,17 +76,6 @@ public class MatriksBalikan {
         double det = getDeterminan(kofaktor);
         int sign = ((x + y) % 2 == 0) ? 1 : -1;
         return sign * det;
-    }
-
-    public static double[][] transpose(double[][] matrix) {
-        int n = matrix.length;
-        double[][] transposedMatrix = new double[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                transposedMatrix[i][j] = matrix[j][i];
-            }
-        }
-        return transposedMatrix;
     }
 
     public static double getDeterminan(double[][] matrix) {

@@ -30,7 +30,18 @@ public class OBE {
             }
         } return resultMatrix;
     }
-    
+    //Transpose matrix
+    public static double[][] transpose(double[][] matrix) {
+        int n = matrix.length;
+        double[][] transposedMatrix = new double[n][n];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                transposedMatrix[i][j] = matrix[j][i];
+            }
+        }
+        return transposedMatrix;
+    }
+
     //Ubah matrix ke augmented matrix
     public static double[][] toAugmented(double[][] squareMatrix, double[][] rhs){
         int i, j;
