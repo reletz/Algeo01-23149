@@ -69,5 +69,10 @@ public class SPL {
         double[][] rhs = {{1}, {0}, {1}};
         double[][] newMatrix = OBE.toAugmented(matrix, rhs);
         IOMatriks.writeMatrix(newMatrix);
+
+        double[] result = gauss(newMatrix);
+        for (int i = 0; i < result.length; i++) {
+            System.out.println("x" + (i + 1) + " = " + result[i]);
+        }
     }
 }
