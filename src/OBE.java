@@ -1,6 +1,18 @@
 public class OBE {
     static final int IDX_UNDEF = -1;
 
+    //Penjumlahan antar dua matrix
+    public static double[][] addMatrix(double[][] matrix1, double[][] matrix2){
+        int i, j;
+        int m = matrix1.length;
+        int n = matrix1[0].length;
+        double[][] resultMatrix = new double[m][n];
+        for (i = 0; i < m; i++){
+            for (j = 0; j < n; j++){
+                resultMatrix[i][j] = matrix1[i][j] + matrix2[i][j];
+            }
+        } return resultMatrix;
+    }
     //Perkalian antar dua matrix
     public static double[][] multiplyMatrix(double[][] matrix1, double[][] matrix2){
         int i, j, k, meetPoint;
@@ -18,6 +30,7 @@ public class OBE {
             }
         } return resultMatrix;
     }
+    
     //Ubah matrix ke augmented matrix
     public static double[][] toAugmented(double[][] squareMatrix, double[][] rhs){
         int i, j;
