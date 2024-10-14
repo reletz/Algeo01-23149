@@ -21,7 +21,7 @@ public class OBE {
   
     // 1: Mengalikan baris dengan suatu konstanta non-zero 
     // Objektif: Agar memiliki 1 utama di [targetedRow][targetedCol]
-    private static void rowMultiply(double[][] matrix, int targetedRow, int targetedCol) {
+    public static void rowMultiply(double[][] matrix, int targetedRow, int targetedCol) {
         int i;
         double k = 1 / matrix[targetedRow][targetedCol];
         for (i = 0; i < matrix[targetedRow].length; i++) {
@@ -31,7 +31,7 @@ public class OBE {
   
     // 2: Mengurangi suatu baris dengan baris atau kelipatan baris lain
     // Objektif: Memiliki 0 di depan leading one nantinya
-    private static void rowSubstract(double[][] matrix, int pivotRow, int targetedCol) {
+    public static void rowSubstract(double[][] matrix, int pivotRow, int targetedCol) {
         int i, j;
         for (i = pivotRow + 1; i < matrix.length; i++) {
             double k = matrix[i][targetedCol] / matrix[pivotRow][targetedCol];
@@ -43,14 +43,14 @@ public class OBE {
   
     // 3: Menukar baris a dengan baris b
     // Objektif: Memudahkan peletakkan barisan 0 di bawah
-    private static void rowSwap(double[][] matrix, int rowA, int rowB) {
+    public static void rowSwap(double[][] matrix, int rowA, int rowB) {
         double[] temp = matrix[rowA];
         matrix[rowA] = matrix[rowB];
         matrix[rowB] = temp;
     }
   
     // Keperluan lain: Kembalikan baris yang kolomnya bernilai 0
-    private static int nonZeroRowCheck(double[][] matrix, int pivotRow, int col) {
+    public static int nonZeroRowCheck(double[][] matrix, int pivotRow, int col) {
         int i;
         for (i = pivotRow; i < matrix.length; i++) {
             if (matrix[i][col] != 0) return i;
