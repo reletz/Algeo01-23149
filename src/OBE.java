@@ -1,6 +1,23 @@
 public class OBE {
     static final int IDX_UNDEF = -1;
 
+    //Perkalian antar dua matrix
+    public static double[][] multiplyMatrix(double[][] matrix1, double[][] matrix2){
+        int i, j, k, meetPoint;
+        double temp;
+        int mResult = matrix1.length;
+        int nResult = matrix2[0].length;
+        double[][] resultMatrix = new double[mResult][nResult];
+        meetPoint = matrix1[0].length;
+        for (i = 0; i < mResult; i++){
+            for (j = 0; j < nResult; j++){
+                temp = 0;
+                for (k = 0; k < meetPoint; k++){
+                    temp += (matrix1[i][k] * matrix2[k][j]);
+                } resultMatrix[i][j] = temp;
+            }
+        } return resultMatrix;
+    }
     //Ubah matrix ke augmented matrix
     public static double[][] toAugmented(double[][] squareMatrix, double[][] rhs){
         int i, j;
@@ -17,6 +34,23 @@ public class OBE {
                 augmentedMatrix[i][j + n1] = rhs[i][j];
             }
         } return augmentedMatrix;
+    }
+
+    //pecah matrix ke lhs dan rhs
+    public static double[][][] splitMatrix(double[][] augmentedMatrix){
+        int i, j;
+        int m = augmentedMatrix.length;
+        int n = augmentedMatrix[0].length;
+
+        double[][] lhs = new double[m][n-1];
+        double[][] rhs = new double[m][1];
+        for (i = 0; i < m; i++){
+            for (j = 0; j < n-1; j++){
+                lhs[i][j] = augmentedMatrix[i][j];
+            }   rhs[i][0] = augmentedMatrix[i][n-1];
+        } 
+        double[][][] result = {lhs, rhs};
+        return result;
     }
   
     // 1: Mengalikan baris dengan suatu konstanta non-zero 
@@ -63,29 +97,30 @@ public class OBE {
     public static double[][] toRowEchelon(double[][] matrix) {
         int pivotRow, col, i;
         col = matrix.length;
+        double[][] result = matrix; 
         pivotRow = 0;
         for (i = 0; i < col; i++) {
-            int nonZeroRow = nonZeroRowCheck(matrix, pivotRow, i);
+            int nonZeroRow = nonZeroRowCheck(result, pivotRow, i);
             if (nonZeroRow != IDX_UNDEF) {
-                rowSwap(matrix, pivotRow, nonZeroRow);
-                rowMultiply(matrix, pivotRow, i);
-                rowSubstract(matrix, pivotRow, i);
+                rowSwap(result, pivotRow, nonZeroRow);
+                rowMultiply(result, pivotRow, i);
+                rowSubstract(result, pivotRow, i);
                 pivotRow += 1;
             }
         }
-        return matrix;
+        return result;
     }
   
     public static double[][] toReducedRowEchelon(double[][] matrix) {
-        toRowEchelon(matrix);
+        double[][] result = toRowEchelon(matrix);
   
-        int rows = matrix.length;
-        int cols = matrix[0].length;
+        int rows = result.length;
+        int cols = result[0].length;
   
         for (int i = rows - 1; i >= 0; i--) {
             int leadingOneCol = -1;
             for (int j = 0; j < rows; j++) {
-                if (matrix[i][j] == 1) {
+                if (result[i][j] == 1) {
                     leadingOneCol = j;
                     break;
                 }
@@ -93,15 +128,15 @@ public class OBE {
   
             if (leadingOneCol != -1) {
                 for (int k = i - 1; k >= 0; k--) {
-                    double factor = matrix[k][leadingOneCol];
+                    double factor = result[k][leadingOneCol];
                     for (int j = 0; j < cols; j++) {
-                        matrix[k][j] -= factor * matrix[i][j];
+                        result[k][j] -= factor * result[i][j];
                     }
                 }
             }
         }
   
-        return matrix;
+        return result;
     }
   
     // Usage Example

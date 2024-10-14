@@ -13,23 +13,22 @@ public class MatriksBalikan {
 
     public static double[][] inversBalikan(double[][] matrix) {
         int n = matrix.length;
-        double[][] augmentedMatrix = new double[n][2 * n];
+        double[][] augmentedMatrix;
+        double[][] identityMatrix = new double[n][n];
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                augmentedMatrix[i][j] = matrix[i][j];
-            }
-            for (int j = n; j < 2 * n; j++) {
-                augmentedMatrix[i][j] = (i == j - n) ? 1 : 0;
-            }
+            identityMatrix[i][i] = 1;
         }
+
+        augmentedMatrix = OBE.toAugmented(matrix, identityMatrix);
         augmentedMatrix = OBE.toReducedRowEchelon(augmentedMatrix);
-        double[][] matriksInverse = new double[n][n];
+
+        double[][] inverseMatrix = new double[n][n];
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
-                matriksInverse[i][j] = augmentedMatrix[i][j + n];
+                inverseMatrix[i][j] = augmentedMatrix[i][j + n];
             }
         }
-        return matriksInverse;
+        return inverseMatrix;
     }
 
     public static double[][] inversAdjoin(double[][] matrix) {

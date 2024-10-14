@@ -7,7 +7,6 @@ public class Determinan {
         } 
     
         if (function.equalsIgnoreCase("Kofaktor")) {
-            System.out.println("Kofaktor");
             return determinanKofaktor(matrix);
         }
         throw new IllegalArgumentException("Fungsi tidak dikenali: " + function);
