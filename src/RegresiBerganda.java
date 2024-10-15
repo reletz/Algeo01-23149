@@ -1,8 +1,25 @@
 import java.util.Scanner;
 public class RegresiBerganda {
-    public static void multipleRegression(){
-        
-    };
+    public static double[][][] multipleLinearRegression(double[][] X, double[][] Y){
+        //Y = XB + e; Ycap = XB; e = Y - Ycap
+        //B = (Xt.X)^-1 . Xt . Y
+        //ukuran Y: m x 1
+        //ukuran X: m x n
+        //ukuran B: n x 1
+        //ukuran e: m x 1
+        double[][] XT = OBE.transpose(X);
+        double[][] XTX = OBE.multiplyMatrix(XT, X);
+        double[][] XTXInv = MatriksBalikan.inversBalikan(XTX);
+        double[][] XTXInvXT = OBE.multiplyMatrix(XTXInv, XT);
+
+        //Finding B
+        double[][] B = OBE.multiplyMatrix(XTXInvXT, Y);
+
+        //Finding e
+        double [][] Ycap = OBE.multiplyMatrix(X, B);
+        double [][] e = OBE.subtractMatrix(Y, Ycap);
+        return new double[][][]{B, e};
+    }
 
     public static void main(String[] args) {
         // Scanner scanner = new Scanner(System.in);
