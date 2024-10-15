@@ -17,7 +17,7 @@ public class RegresiBerganda {
 
         //Finding e
         double [][] Ycap = OBE.multiplyMatrix(X, B);
-        double [][] e = OBE.subtractMatrix(Y, Ycap);
+        double [][] e = OBE.substractMatrix(Y, Ycap);
         return new double[][][]{B, e};
     }
 
