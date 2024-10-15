@@ -1,6 +1,32 @@
 public class OBE {
     static final int IDX_UNDEF = -1;
 
+    //Penjumlahan antar dua matrix
+    public static double[][] addMatrix(double[][] matrix1, double[][] matrix2){
+        int i, j;
+        int m = matrix1.length;
+        int n = matrix1[0].length;
+        double[][] resultMatrix = new double[m][n];
+        for (i = 0; i < m; i++){
+            for (j = 0; j < n; j++){
+                resultMatrix[i][j] = matrix1[i][j] + matrix2[i][j];
+            }
+        } return resultMatrix;
+    }
+
+    //Pengurangan antar dua matrix
+    public static double[][] substractMatrix(double[][] matrix1, double[][] matrix2){
+        int i, j;
+        int m = matrix1.length;
+        int n = matrix1[0].length;
+        double[][] resultMatrix = new double[m][n];
+        for (i = 0; i < m; i++){
+            for (j = 0; j < n; j++){
+                resultMatrix[i][j] = matrix1[i][j] - matrix2[i][j];
+            }
+        } return resultMatrix;
+    }
+
     // Copy matrix, avail for non square yay
     public static double[][] copyMatrix(double[][] matrix) {
         int rows = matrix.length;
@@ -31,6 +57,20 @@ public class OBE {
             }
         } return resultMatrix;
     }
+    
+    //Transpose matrix
+    public static double[][] transpose(double[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        double[][] transposedMatrix = new double[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                transposedMatrix[i][j] = matrix[j][i];
+            }
+        }
+        return transposedMatrix;
+    }
+
     //Ubah matrix ke augmented matrix
     public static double[][] toAugmented(double[][] squareMatrix, double[][] rhs){
         int i, j, k;

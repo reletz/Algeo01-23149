@@ -1,6 +1,7 @@
 import java.util.Scanner;
 
 public class MatriksBalikan {
+    // Ensure no -0 value
     public static double[][] normalizeMatrix(double[][] matrix) {
         int n = matrix.length;
         for (int i = 0; i < n; i++) {
@@ -11,9 +12,7 @@ public class MatriksBalikan {
             }
         }
         return matrix;
-    }
-
-    
+    }    
 
     public static double[][] getInvers(double[][] matrix, String function) {
         double[][] copy = OBE.copyMatrix(matrix);
@@ -43,9 +42,7 @@ public class MatriksBalikan {
             identityMatrix[i][i] = 1;
         }
 
-
         augmentedMatrix = OBE.toAugmented(matrix, identityMatrix);
-
         augmentedMatrix = OBE.toReducedRowEchelon(augmentedMatrix);
 
         double[][] inverseMatrix = new double[n][n];
@@ -58,7 +55,7 @@ public class MatriksBalikan {
     }
 
     public static double[][] inversAdjoin(double[][] matrix) {
-        double[][] matrixInvers = transpose(getMatriksKofaktor(matrix));
+        double[][] matrixInvers = OBE.transpose(getMatriksKofaktor(matrix));
         double[][] copy = OBE.copyMatrix(matrix);
         double det = Determinan.determinanOBE(copy);
         return multiplyByCoef(matrixInvers, 1 / det);
@@ -105,17 +102,6 @@ public class MatriksBalikan {
         return sign * det;
     }
 
-    public static double[][] transpose(double[][] matrix) {
-        int n = matrix.length;
-        double[][] transposedMatrix = new double[n][n];
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
-                transposedMatrix[i][j] = matrix[j][i];
-            }
-        }
-        return transposedMatrix;
-    }
-
     public static void handleInput(Scanner scanner, String function) {
         System.out.println("Pilihan Input");
         System.out.println("1. Keyboard");
@@ -132,8 +118,6 @@ public class MatriksBalikan {
             case 1:
                 Main.clearConsole();
                 inputMatrix = IOMatriks.getUserInput(scanner);
-                IOMatriks.writeMatrix(inputMatrix);
-                System.out.println("------------------------");
                 outputMatrix = getInvers(inputMatrix, function);
                 outputMatrixText = IOMatriks.convertMatrixToText(outputMatrix);
                 if (outputMatrix.length != 0) {
