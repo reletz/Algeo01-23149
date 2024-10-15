@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class IOMatriks {
-    // Spec: handle input keyboard, handle input file, handle output (print matrix)
     public static double[][] convertTextToMatrix(String text) {
         // Array karakter text
         char[] charArray = text.toCharArray();

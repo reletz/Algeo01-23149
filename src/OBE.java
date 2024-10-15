@@ -1,6 +1,19 @@
 public class OBE {
     static final int IDX_UNDEF = -1;
 
+    // Copy matrix, avail for non square yay
+    public static double[][] copyMatrix(double[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        double[][] copy = new double[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                copy[i][j] = matrix[i][j];
+            }
+        }
+        return copy;
+    }
+
     //Perkalian antar dua matrix
     public static double[][] multiplyMatrix(double[][] matrix1, double[][] matrix2){
         int i, j, k, meetPoint;
@@ -20,7 +33,7 @@ public class OBE {
     }
     //Ubah matrix ke augmented matrix
     public static double[][] toAugmented(double[][] squareMatrix, double[][] rhs){
-        int i, j;
+        int i, j, k;
         int m = squareMatrix.length;
         int n1 = squareMatrix[0].length;
         int n2 = rhs[0].length;
@@ -30,8 +43,8 @@ public class OBE {
             for (j = 0; j < n1; j++) {
                 augmentedMatrix[i][j] = squareMatrix[i][j];
             }
-            for (j = 0; j < n2; j++){
-                augmentedMatrix[i][j + n1] = rhs[i][j];
+            for (k = 0; k < n2; k++){
+                augmentedMatrix[i][k + n1] = rhs[i][k];
             }
         } return augmentedMatrix;
     }
