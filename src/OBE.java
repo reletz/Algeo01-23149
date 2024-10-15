@@ -47,10 +47,11 @@ public class OBE {
     
     //Transpose matrix
     public static double[][] transpose(double[][] matrix) {
-        int n = matrix.length;
-        double[][] transposedMatrix = new double[n][n];
+        int m = matrix.length;
+        int n = matrix[0].length;
+        double[][] transposedMatrix = new double[n][m];
         for (int i = 0; i < n; i++) {
-            for (int j = 0; j < n; j++) {
+            for (int j = 0; j < m; j++) {
                 transposedMatrix[i][j] = matrix[j][i];
             }
         }
