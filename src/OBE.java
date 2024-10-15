@@ -13,6 +13,20 @@ public class OBE {
             }
         } return resultMatrix;
     }
+
+    //Pengurangan antar dua matrix
+    public static double[][] substractMatrix(double[][] matrix1, double[][] matrix2){
+        int i, j;
+        int m = matrix1.length;
+        int n = matrix1[0].length;
+        double[][] resultMatrix = new double[m][n];
+        for (i = 0; i < m; i++){
+            for (j = 0; j < n; j++){
+                resultMatrix[i][j] = matrix1[i][j] - matrix2[i][j];
+            }
+        } return resultMatrix;
+    }
+
     //Perkalian antar dua matrix
     public static double[][] multiplyMatrix(double[][] matrix1, double[][] matrix2){
         int i, j, k, meetPoint;
@@ -30,6 +44,7 @@ public class OBE {
             }
         } return resultMatrix;
     }
+    
     //Transpose matrix
     public static double[][] transpose(double[][] matrix) {
         int n = matrix.length;
