@@ -1,6 +1,6 @@
 public class InterpolasiPolinom {
 
-    public static double[] interpolationSolution(double[][] pointMatrix) {
+    public static double[][] interpolationSolution(double[][] pointMatrix) {
         int i, j;
         int n = pointMatrix.length;
         double[][] augmentedMatrix = new double[n][n + 1];
@@ -14,19 +14,19 @@ public class InterpolasiPolinom {
 
     public static double polinomialInterpolation(double[][] pointMatrix, double x){
         double result = 0;
-        double[] solution = interpolationSolution(pointMatrix);
+        double[][] solution = interpolationSolution(pointMatrix);
         for (int i = 0; i < solution.length; i++){
-            result += solution[i] * Math.pow(x, i);
+            result += solution[i][0] * Math.pow(x, i);
         } return result;
     }
 
     public static void main(String[] args) {
-        double[][] pointMatrix = {
-            {8, 2.0794},
-            {9, 2.1972},
-            {9.5, 2.2513},
-        };
-        double x = 9.2;
-        System.out.println(polinomialInterpolation(pointMatrix, x));
+        // double[][] pointMatrix = {
+        //     {8, 2.0794},
+        //     {9, 2.1972},
+        //     {9.5, 2.2513},
+        // };
+        // double x = 9.2;
+        // System.out.println(polinomialInterpolation(pointMatrix, x));
     }
 }
