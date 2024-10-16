@@ -1,7 +1,7 @@
 import java.util.Scanner;
-import javax.crypto.SealedObject;
+
 public class RegresiBerganda {
-    public static double[] multipleLinearRegression1(double[][] X, double[][] Y){
+    public static double[][] multipleLinearRegression1(double[][] X, double[][] Y){
         //(Xt.X)(B) = Xt.Y
         //ukuran Y: m x 1
         //ukuran X: m x n (Ada (n - 1) data)
@@ -14,7 +14,7 @@ public class RegresiBerganda {
         IOMatriks.writeMatrix(XTY);
 
         //Finding B
-        double[] B = SPL.gauss(OBE.toAugmented(XTX, XTY));
+        double[][] B = SPL.gauss(OBE.toAugmented(XTX, XTY));
         return B;
     }
 
@@ -39,10 +39,7 @@ public class RegresiBerganda {
         {61},
         {62}
         };
-        double[] B = multipleLinearRegression1(X, Y);
-        for (i = 0; i < B.length; i++){
-            System.out.print(B[i] + " ");
-        }
+        double[][] B = multipleLinearRegression1(X, Y);
         // Scanner scanner = new Scanner(System.in);
         // while (true) {
         //     System.out.println("MENU:");

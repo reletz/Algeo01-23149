@@ -1,14 +1,37 @@
 import java.util.Scanner;
 
 public class MatriksBalikan {
-    public static double[][] getInvers(double[][] matrix, String function) {
-        // TODO: Handle det = 0
-        if (function.equals("balikan")) {
-            return inversBalikan(matrix);
-        } else if (function.equals("adjoin")) {
-            return inversAdjoin(matrix);
+    // Ensure no -0 value
+    public static double[][] normalizeMatrix(double[][] matrix) {
+        int n = matrix.length;
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                if (matrix[i][j] == -0.0) {
+                    matrix[i][j] = 0.0;
+                }
+            }
         }
-        return new double[0][0];
+        return matrix;
+    }    
+
+    public static double[][] getInvers(double[][] matrix, String function) {
+        double[][] copy = OBE.copyMatrix(matrix);
+        double det = Determinan.determinanOBE(copy);
+        if (det == 0) {
+            System.out.println("Matrix berupa matriks singular dan tidak memiliki invers.");
+            return new double[0][0];
+        }
+    
+        double[][] result;
+        if (function.equals("balikan")) {
+            result = inversBalikan(matrix);
+        } else if (function.equals("adjoin")) {
+            result = inversAdjoin(matrix);
+        } else {
+            return new double[0][0];
+        }
+    
+        return normalizeMatrix(result);
     }
 
     public static double[][] inversBalikan(double[][] matrix) {
@@ -33,7 +56,8 @@ public class MatriksBalikan {
 
     public static double[][] inversAdjoin(double[][] matrix) {
         double[][] matrixInvers = OBE.transpose(getMatriksKofaktor(matrix));
-        double det = getDeterminan(matrix);
+        double[][] copy = OBE.copyMatrix(matrix);
+        double det = Determinan.determinanOBE(copy);
         return multiplyByCoef(matrixInvers, 1 / det);
     }
 
@@ -73,24 +97,9 @@ public class MatriksBalikan {
             }
             kofaktor_I++;
         }
-        double det = getDeterminan(kofaktor);
+        double det = Determinan.determinanKofaktor(kofaktor);
         int sign = ((x + y) % 2 == 0) ? 1 : -1;
         return sign * det;
-    }
-
-    public static double getDeterminan(double[][] matrix) {
-        int n = matrix.length;
-        if (n == 1) {
-            return matrix[0][0];
-        }
-        if (n == 2) {
-            return matrix[0][0] * matrix[1][1] - matrix[0][1] * matrix[1][0];
-        }
-        double determinan = 0;
-        for (int j = 0; j < n; j++) {
-            determinan += matrix[0][j] * getKofaktor(matrix, 0, j);
-        }
-        return determinan;
     }
 
     public static void handleInput(Scanner scanner, String function) {
@@ -111,6 +120,9 @@ public class MatriksBalikan {
                 inputMatrix = IOMatriks.getUserInput(scanner);
                 outputMatrix = getInvers(inputMatrix, function);
                 outputMatrixText = IOMatriks.convertMatrixToText(outputMatrix);
+                if (outputMatrix.length != 0) {
+                    System.out.println("Matriks Invers:");
+                }
                 IOMatriks.writeMatrix(outputMatrix);
                 IOMatriks.saveToFile(outputMatrixText, scanner);
                 break;
@@ -121,6 +133,9 @@ public class MatriksBalikan {
                 inputMatrix = IOMatriks.readFile(filePath);
                 outputMatrix = getInvers(inputMatrix, function);
                 outputMatrixText = IOMatriks.convertMatrixToText(outputMatrix);
+                if (outputMatrix.length != 0) {
+                    System.out.println("Matriks Invers:");
+                }
                 IOMatriks.writeMatrix(outputMatrix);
                 IOMatriks.saveToFile(outputMatrixText, scanner);
                 break;
