@@ -150,7 +150,7 @@ public class OBE {
     public static double[][] toRowEchelon(double[][] matrix) {
         int pivotRow, col, i;
         col = matrix.length;
-        double[][] result = matrix; 
+        double[][] result = copyMatrix(matrix); 
         pivotRow = 0;
         for (i = 0; i < col; i++) {
             int nonZeroRow = nonZeroRowCheck(result, pivotRow, i);
