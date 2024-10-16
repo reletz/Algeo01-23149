@@ -5,6 +5,7 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         while (true) {
             clearConsole();
+            System.out.println("KALKULATOR ATUR ALGEO SMEAN");
             System.out.println("\nMENU UTAMA:");
             System.out.println("1. Sistem Persamaan Linear");
             System.out.println("2. Determinan");
@@ -38,7 +39,7 @@ public class Main {
                     break;
                 case 5:
                     clearConsole();
-                    // Call method
+                    InterpolasiBicubicSpline.main(new String[0]);
                     break;
                 case 6:
                     clearConsole();

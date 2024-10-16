@@ -1,6 +1,45 @@
 public class OBE {
     static final int IDX_UNDEF = -1;
 
+    //Penjumlahan antar dua matrix
+    public static double[][] addMatrix(double[][] matrix1, double[][] matrix2){
+        int i, j;
+        int m = matrix1.length;
+        int n = matrix1[0].length;
+        double[][] resultMatrix = new double[m][n];
+        for (i = 0; i < m; i++){
+            for (j = 0; j < n; j++){
+                resultMatrix[i][j] = matrix1[i][j] + matrix2[i][j];
+            }
+        } return resultMatrix;
+    }
+
+    //Pengurangan antar dua matrix
+    public static double[][] substractMatrix(double[][] matrix1, double[][] matrix2){
+        int i, j;
+        int m = matrix1.length;
+        int n = matrix1[0].length;
+        double[][] resultMatrix = new double[m][n];
+        for (i = 0; i < m; i++){
+            for (j = 0; j < n; j++){
+                resultMatrix[i][j] = matrix1[i][j] - matrix2[i][j];
+            }
+        } return resultMatrix;
+    }
+
+    // Copy matrix, avail for non square yay
+    public static double[][] copyMatrix(double[][] matrix) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        double[][] copy = new double[rows][cols];
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                copy[i][j] = matrix[i][j];
+            }
+        }
+        return copy;
+    }
+
     //Perkalian antar dua matrix
     public static double[][] multiplyMatrix(double[][] matrix1, double[][] matrix2){
         int i, j, k, meetPoint;
@@ -18,9 +57,23 @@ public class OBE {
             }
         } return resultMatrix;
     }
+    
+    //Transpose matrix
+    public static double[][] transpose(double[][] matrix) {
+        int m = matrix.length;
+        int n = matrix[0].length;
+        double[][] transposedMatrix = new double[n][m];
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < m; j++) {
+                transposedMatrix[i][j] = matrix[j][i];
+            }
+        }
+        return transposedMatrix;
+    }
+
     //Ubah matrix ke augmented matrix
     public static double[][] toAugmented(double[][] squareMatrix, double[][] rhs){
-        int i, j;
+        int i, j, k;
         int m = squareMatrix.length;
         int n1 = squareMatrix[0].length;
         int n2 = rhs[0].length;
@@ -30,8 +83,8 @@ public class OBE {
             for (j = 0; j < n1; j++) {
                 augmentedMatrix[i][j] = squareMatrix[i][j];
             }
-            for (j = 0; j < n2; j++){
-                augmentedMatrix[i][j + n1] = rhs[i][j];
+            for (k = 0; k < n2; k++){
+                augmentedMatrix[i][k + n1] = rhs[i][k];
             }
         } return augmentedMatrix;
     }
@@ -97,7 +150,7 @@ public class OBE {
     public static double[][] toRowEchelon(double[][] matrix) {
         int pivotRow, col, i;
         col = matrix.length;
-        double[][] result = matrix; 
+        double[][] result = copyMatrix(matrix); 
         pivotRow = 0;
         for (i = 0; i < col; i++) {
             int nonZeroRow = nonZeroRowCheck(result, pivotRow, i);
