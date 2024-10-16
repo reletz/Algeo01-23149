@@ -148,7 +148,8 @@ public class MatriksBalikan {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         while (true) {
-            System.out.println("\nMENU MATRIKS BALIKAN:");
+            System.out.println("MATRIKS BALIKAN:");
+            System.out.println("\nSUB-MENU MATRIKS BALIKAN:");
             System.out.println("1. Metode OBE");
             System.out.println("2. Metode Adjoin");
             System.out.println("3. Keluar");
