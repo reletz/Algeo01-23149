@@ -20,7 +20,6 @@ public class RegresiBerganda {
 
         //Finding B
         double[][] augmented = OBE.toAugmented(XTX, XTY);
-        IOMatriks.writeMatrix(augmented);
 
         double[][] B = SPL.gauss(augmented);
         return B;
