@@ -1,9 +1,10 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class InterpolasiPolinom {
-
+    
     private static double[][] interpolationSolution(double[][] pointMatrix) {
         int i, j;
         int n = pointMatrix.length;
@@ -66,7 +67,9 @@ public class InterpolasiPolinom {
                 String filePath = scanner.nextLine();
                 try {
                     Scanner fileScanner = new Scanner(new File(filePath));
-                    int m = 0;
+                    fileScanner.useLocale(Locale.US);
+
+                    int m = 0; //print line count
                     while (fileScanner.hasNextLine()) {
                         fileScanner.nextLine();
                         m += 1;
@@ -76,6 +79,8 @@ public class InterpolasiPolinom {
                     fileScanner.close();
 
                     fileScanner = new Scanner(new File(filePath));
+                    fileScanner.useLocale(Locale.US);
+
                     for (int i = 0; i < m; i++) {
                         if (fileScanner.hasNextDouble()) data[i][0] = fileScanner.nextDouble();
                         if (fileScanner.hasNextDouble()) data[i][1] = fileScanner.nextDouble();
@@ -97,14 +102,23 @@ public class InterpolasiPolinom {
         int i;
         double result[][][] = polinomialInterpolation(setOfPoints, x);
         System.out.println("Fungsi interpolasi yang memungkinkan adalah: ");
-        System.out.print("p" + (setOfPoints.length-1) + "(x) = " + result[0][0][0]);
+        String function = "p" + (setOfPoints.length-1) + "(x) = " + + result[0][0][0];
+        System.out.print(function);
         for (i = 1; i < setOfPoints.length; i++){
-            if (result[0][i][0] < 0) System.out.print(" - " + Math.abs(result[0][i][0]) + "x^" + i);
-            else System.out.print(" + " + result[0][i][0] + "x^" + i);
+            if (result[0][i][0] < 0) {
+                function += " - " + Math.abs(result[0][i][0]) + "x^" + i;
+                System.out.print(" - " + Math.abs(result[0][i][0]) + "x^" + i);
+            }
+            else {
+                function += " + " + result[0][i][0] + "x^" + i;
+                System.out.print(" + " + result[0][i][0] + "x^" + i);
+            }
         }
-        System.out.println("\nNilai interpolasinya, yakni p(" + x + ") = " + result[1][0][0]);
-        // String resultString = Double.toString(result[1][0][0]); harus bikin yang bisa save fungsi.
-        // IOMatriks.saveToFile(resultString, scanner);
+        String interpolationValue = "p(" + x + ") = " + result[1][0][0];
+        System.out.println("\nNilai interpolasinya, yakni " + interpolationValue);
+
+        String resultString = function + "\n" + interpolationValue;
+        IOMatriks.saveToFile(resultString, scanner);
     }
 
     public static void main(String[] args) {
