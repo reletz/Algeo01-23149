@@ -43,7 +43,9 @@ public class SPL {
         double[][] result = new double[x.length][1];
         for (i = 0; i < x.length; i++){
             result[i][0] = x[i][0];
-        } return result;
+        } 
+        // IOMatriks.writeMatrix(result);
+        return result;
     }
 
     //Input: Augmented Matrix
@@ -53,12 +55,23 @@ public class SPL {
         double[][] lhs = spliitedMatrix[0];
         double[][] rhs = spliitedMatrix[1];
         double[][] result = new double[rhs.length][1];
-        for (i = 0; i < lhs.length; i++){
-            double[][] tmpMatrix = lhs;
-            for (int j = 0; j < lhs[0].length; j++){
+        double detLhs = Determinan.getDeterminan(lhs, "kofaktor");
+
+        if (detLhs == 0) {
+            return result; 
+        }
+
+        for (i = 0; i < lhs.length; i++) {
+            double[][] tmpMatrix = new double[lhs.length][lhs[0].length];
+            for (int k = 0; k < lhs.length; k++) {
+                System.arraycopy(lhs[k], 0, tmpMatrix[k], 0, lhs[0].length);
+            }
+            for (int j = 0; j < lhs[0].length; j++) {
                 tmpMatrix[j][i] = rhs[j][0];
-            } result[i][0] = Determinan.getDeterminan(tmpMatrix, "kofaktor") / Determinan.getDeterminan(lhs, "kofaktor");
-        } return result;
+            }
+            result[i][0] = Determinan.getDeterminan(tmpMatrix, "kofaktor") / detLhs;
+        }
+        return result;
     }  
     
     public static boolean hasLeadingOne(double[][] matrix, int col){
@@ -90,11 +103,7 @@ public class SPL {
         if (count == (n - 1) && OBEmatrix[m - 1][n - 1] != 0){
             return 2; //No Solution
         }
-        for (i = 0; i < n; i++){
-            if (!(hasLeadingOne(OBEmatrix, i))) {
-                return 1; //Many Solution
-            }
-        }  return 3; //Normal Solution
+        return 1; //Normal Solution
     }
 
     public static Parametrik[] parametrikBackSub(double[][] OBEmatrix){
@@ -244,8 +253,8 @@ public class SPL {
                 result = OBE.toRowEchelon(setOfPoints);
                 IOMatriks.writeMatrix(result);
                 if (checkSolution(result) == 1){
-                    solution += "Banyak solusi, solusi parametrik:\n";
-                    System.out.println("Banyak solusi, solusi parametrik:");
+                    solution += "Solusi:\n";
+                    System.out.println("Solusi:");
                     Parametrik[] solutions = parametrikBackSub(result);
                     for (i = 0; i < solutions.length; i++){
                         solution += "x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]) + "\n";
@@ -256,22 +265,14 @@ public class SPL {
                     solution += "Tidak ada solusi.";
                     System.out.println("Tidak ada solusi.");
 
-                } else {
-                    solution += "Solusi unik hasil penyelesaian dengan metode Gauss adalah: \n";
-                    System.out.println("Solusi unik hasil penyelesaian dengan metode Gauss adalah: ");
-                    double[][] solutions = BackSubstitution(result);
-                    for (i = 0; i < solutions.length; i++){
-                        solution += "x" + (i+1) + " = " + solutions[i][0] + "\n";
-                        System.out.println("x" + (i+1) + " = " + solutions[i][0]);
-                    }
-                }
+                } 
                 break;
             case 2:
                 result = OBE.toReducedRowEchelon(setOfPoints);
                 IOMatriks.writeMatrix(result);
                 if (checkSolution(result) == 1){
-                    solution += "Banyak solusi, solusi parametrik:\n";
-                    System.out.println("Banyak solusi, solusi parametrik:");
+                    solution += "Solusi:\n";
+                    System.out.println("Solusi:");
                     Parametrik[] solutions = parametrikBackSub(result);
                     for (i = 0; i < solutions.length; i++){
                         solution += "x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]) + "\n";
@@ -282,15 +283,7 @@ public class SPL {
                     solution += "Tidak ada solusi.";
                     System.out.println("Tidak ada solusi.");
 
-                } else {
-                    solution += "Solusi unik hasil penyelesaian dengan metode Gauss adalah: \n";
-                    System.out.println("Solusi unik hasil penyelesaian dengan metode Gauss adalah: ");
-                    double[][] solutions = BackSubstitution(result);
-                    for (i = 0; i < solutions.length; i++){
-                        solution += "x" + (i+1) + " = " + solutions[i][0] + "\n";
-                        System.out.println("x" + (i+1) + " = " + solutions[i][0]);
-                    }
-                }
+                } 
                 break;
 
             case 3:
@@ -308,7 +301,7 @@ public class SPL {
 
                 result = matriksBalikan(setOfPoints);
                 System.out.println("Hasil penyelesaian dengan metode Invers adalah: ");
-                for (i = 0; i < result[0].length; i++){
+                for (i = 0; i < result.length; i++){
                     solution += "x" + (i+1) + " = " + result[i][0] + "\n";
                     System.out.println("x" + (i+1) + " = " + result[i][0]);
                 }
@@ -329,7 +322,7 @@ public class SPL {
 
                 result = cramer(setOfPoints);
                 System.out.println("Hasil penyelesaian dengan metode Cramer adalah: ");
-                for (i = 0; i < result[0].length; i++){
+                for (i = 0; i < result.length; i++){
                     solution += "x" + i + " = " + result[i][0] + "\n";
                     System.out.println("x" + i + " = " + result[i][0]);
                 }
