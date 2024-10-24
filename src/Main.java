@@ -13,7 +13,8 @@ public class Main {
             System.out.println("4. Interpolasi Polinom");
             System.out.println("5. Interpolasi Bicubic Spline");
             System.out.println("6. Regresi Linear dan Kuadratik Berganda");
-            System.out.println("7. Keluar");
+            System.out.println("7. Image Resizing dan Stretching");
+            System.out.println("8. Keluar");
             System.out.print("\nMasukkan pilihan: ");
 
             int choice = scanner.nextInt();
@@ -46,6 +47,10 @@ public class Main {
                     RegresiBerganda.main(new String[0]);
                     break;
                 case 7:
+                    clearConsole();
+                    ImageResizing.main(new String[0]);
+                    break;
+                case 8:
                     System.out.println("Keluar dari program.");
                     scanner.close();
                     return;
