@@ -147,7 +147,7 @@ public class RegresiBerganda {
                 n = scanner.nextInt();
                 System.out.print("Masukkan m (jumlah data): ");
                 m = scanner.nextInt();
-                if (m < 3) {
+                if (m < 2) {
                     System.out.println("Jumlah data tidak cukup untuk melakukan regresi.");
                     return;
                 }
@@ -203,6 +203,11 @@ public class RegresiBerganda {
                     dataX = new double[m][n];
                     dataY = new double[m][1];
                     fileScanner.close();
+
+                    if (m < 2) {
+                        System.out.println("Jumlah data tidak cukup untuk melakukan regresi.");
+                        return;
+                    }
 
                     fileScanner = new Scanner(new File(filePath));
                     fileScanner.useLocale(Locale.US);
