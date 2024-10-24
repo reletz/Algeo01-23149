@@ -6,7 +6,7 @@ public class OBE {
     }
 
     public static boolean isInversable(double[][] matrix) {
-        return (!isSquare(matrix) || Determinan.getDeterminan(matrix, "obe") != 0);
+        return (isSquare(matrix) || Determinan.getDeterminan(matrix, "obe") != 0);
     }
 
     //Penjumlahan antar dua matrix
