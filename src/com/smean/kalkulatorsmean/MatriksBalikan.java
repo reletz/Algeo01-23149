@@ -1,3 +1,4 @@
+package com.smean.kalkulatorsmean;
 import java.util.Scanner;
 
 public class MatriksBalikan {
