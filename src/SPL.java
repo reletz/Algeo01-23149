@@ -95,7 +95,6 @@ public class SPL {
                 newX[i][j] = 0;
             }
         } double[][] newMatrix = OBE.toAugmented(newX, Y);
-        IOMatriks.writeMatrix(newMatrix);
         return newMatrix;
     }
     
