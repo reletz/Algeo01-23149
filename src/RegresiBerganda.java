@@ -315,7 +315,7 @@ public class RegresiBerganda {
         regressionValue += ") = ";
         
         System.out.println(regressionValue + result[1][0][0]);
-        String resultString = function + "\n" + regressionValue;
+        String resultString = function + "\n" + regressionValue + result[1][0][0];
         IOMatriks.saveToFile(resultString, scanner);
     }
     
