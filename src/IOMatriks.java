@@ -74,6 +74,9 @@ public class IOMatriks {
     public static void writeMatrix(double[][] matrix) {
         for (double[] row : matrix) {
             for (double element : row) {
+                if (element == -0.0) {
+                    element = 0.0;
+                }
                 System.out.printf("%8.3f", element);
             }
             System.out.println();

@@ -118,6 +118,10 @@ public class MatriksBalikan {
             case 1:
                 Main.clearConsole();
                 inputMatrix = IOMatriks.getUserInput(scanner);
+                if (!OBE.isSquare(inputMatrix)) {
+                    System.out.println("Matriks tidak berbentuk persegi.");
+                    return;
+                }
                 outputMatrix = getInvers(inputMatrix, function);
                 outputMatrixText = IOMatriks.convertMatrixToText(outputMatrix);
                 if (outputMatrix.length != 0) {
@@ -131,6 +135,10 @@ public class MatriksBalikan {
                 System.out.print("Masukkan file path: ");
                 String filePath = scanner.nextLine();
                 inputMatrix = IOMatriks.readFile(filePath);
+                if (!OBE.isSquare(inputMatrix)) {
+                    System.out.println("Matriks tidak berbentuk persegi.");
+                    return;
+                }
                 outputMatrix = getInvers(inputMatrix, function);
                 outputMatrixText = IOMatriks.convertMatrixToText(outputMatrix);
                 if (outputMatrix.length != 0) {
