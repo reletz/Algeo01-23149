@@ -87,14 +87,14 @@ public class SPL {
                 count += 1;
             }
         }
-
+        if (count == (n - 1) && OBEmatrix[m - 1][n - 1] != 0){
+            return 2; //No Solution
+        }
         for (i = 0; i < n; i++){
             if (!(hasLeadingOne(OBEmatrix, i))) {
                 return 1; //Many Solution
             }
-        } if (count == (n - 1) && OBEmatrix[m - 1][n - 1] != 0){
-            return 2; //No Solution
-        } return 3; //Normal Solution
+        }  return 3; //Normal Solution
     }
 
     public static Parametrik[] parametrikBackSub(double[][] OBEmatrix){
