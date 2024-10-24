@@ -45,9 +45,7 @@ public class InterpolasiBicubicSpline {
                 }
                 aVal = scanner.nextDouble();
                 bVal = scanner.nextDouble();
-
                 coeff = calculateCoefficients(y);
-                IOMatriks.writeMatrix(coeff);
 
                 // Calculate interpolation value at (a, b)
                 result = bicubicInterpolation(coeff, aVal, bVal);
