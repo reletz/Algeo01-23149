@@ -73,6 +73,31 @@ public class SPL {
         }
         return result;
     }  
+
+    //Add 0 on the right, jadi bisa di proses pake gauss
+    public static double[][] addZero (double[][] augmented){
+        int i, j;
+        double[][] X = OBE.splitMatrix(augmented)[0];
+        double[][] Y = OBE.splitMatrix(augmented)[1];
+        if (X.length <= X[0].length){
+            return augmented;
+        }
+
+        double[][] newX = new double[X.length][X.length];
+        for (i = 0; i < X.length; i++){
+            for (j = 0; j < X[0].length; j++){
+                newX[i][j] = X[i][j];
+            }
+        }
+
+        for (i = 0; i < X.length; i++){
+            for (j = X[0].length ; j < X.length; j++){
+                newX[i][j] = 0;
+            }
+        } double[][] newMatrix = OBE.toAugmented(newX, Y);
+        IOMatriks.writeMatrix(newMatrix);
+        return newMatrix;
+    }
     
     public static boolean hasLeadingOne(double[][] matrix, int col){
         int i, j;
@@ -250,13 +275,14 @@ public class SPL {
         double[][] result = null;
         switch (methodChoice){
             case 1:
-                result = OBE.toRowEchelon(setOfPoints);
-                IOMatriks.writeMatrix(result);
+                double[][] temp = addZero(setOfPoints);
+                int diff = (temp[0].length - setOfPoints[0].length) > 0 ? (temp[0].length - setOfPoints[0].length) : 0;
+                result = OBE.toRowEchelon(temp);
                 if (checkSolution(result) == 1){
                     solution += "Solusi:\n";
                     System.out.println("Solusi:");
                     Parametrik[] solutions = parametrikBackSub(result);
-                    for (i = 0; i < solutions.length; i++){
+                    for (i = 0; i < solutions.length - diff; i++){
                         solution += "x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]) + "\n";
                         System.out.println("x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]));
                     }
@@ -268,13 +294,14 @@ public class SPL {
                 } 
                 break;
             case 2:
-                result = OBE.toReducedRowEchelon(setOfPoints);
-                IOMatriks.writeMatrix(result);
+                temp = addZero(setOfPoints);
+                diff = (temp[0].length - setOfPoints[0].length) > 0 ? (temp[0].length - setOfPoints[0].length) : 0;
+                result = OBE.toReducedRowEchelon(temp);
                 if (checkSolution(result) == 1){
                     solution += "Solusi:\n";
                     System.out.println("Solusi:");
                     Parametrik[] solutions = parametrikBackSub(result);
-                    for (i = 0; i < solutions.length; i++){
+                    for (i = 0; i < solutions.length - diff; i++){
                         solution += "x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]) + "\n";
                         System.out.println("x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]));
                     }
