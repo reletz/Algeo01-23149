@@ -35,7 +35,6 @@ public class InterpolasiPolinom {
         scanner.nextLine();
 
         double val = 0.0;
-        int a = 1;
         double[][] data = null;
 
         switch (subChoice) {
