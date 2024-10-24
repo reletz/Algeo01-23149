@@ -1,6 +1,14 @@
 public class OBE {
     static final int IDX_UNDEF = -1;
 
+    public static boolean isSquare(double[][] matrix) {
+        return matrix.length == matrix[0].length;
+    }
+
+    public static boolean isInversable(double[][] matrix) {
+        return (!isSquare(matrix) || Determinan.getDeterminan(matrix, "obe") != 0);
+    }
+
     //Penjumlahan antar dua matrix
     public static double[][] addMatrix(double[][] matrix1, double[][] matrix2){
         int i, j;

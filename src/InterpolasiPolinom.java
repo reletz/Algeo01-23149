@@ -122,13 +122,6 @@ public class InterpolasiPolinom {
 
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
-        // double[][] pointMatrix = {
-        //     {8, 2.0794},
-        //     {9, 2.1972},
-        //     {9.5, 2.2513},
-        // };
-        // double x = 9.2;
-        // System.out.println(polinomialInterpolation(pointMatrix, x));
         handleInput(scanner);
     }
 }
