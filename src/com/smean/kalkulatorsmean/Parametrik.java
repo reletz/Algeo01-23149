@@ -1,3 +1,4 @@
+package com.smean.kalkulatorsmean;
 public class Parametrik {
   public double[] coeffList;
 

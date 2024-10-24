@@ -1,3 +1,4 @@
+package com.smean.kalkulatorsmean;
 import java.util.Locale;
 import java.util.Scanner;
 

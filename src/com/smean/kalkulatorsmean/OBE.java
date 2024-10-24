@@ -1,3 +1,4 @@
+package com.smean.kalkulatorsmean;
 public class OBE {
     static final int IDX_UNDEF = -1;
 

@@ -1,3 +1,4 @@
+package com.smean.kalkulatorsmean;
 public class SPLTEST {
 
   // Fungsi untuk menyelesaikan SPL dengan metode Gauss
