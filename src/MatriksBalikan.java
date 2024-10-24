@@ -1,3 +1,4 @@
+import java.util.Locale;
 import java.util.Scanner;
 
 public class MatriksBalikan {
@@ -103,6 +104,7 @@ public class MatriksBalikan {
     }
 
     public static void handleInput(Scanner scanner, String function) {
+        scanner.useLocale(Locale.US);
         System.out.println("Pilihan Input");
         System.out.println("1. Keyboard");
         System.out.println("2. File");

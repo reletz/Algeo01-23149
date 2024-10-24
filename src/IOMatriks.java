@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class IOMatriks {
@@ -84,6 +85,7 @@ public class IOMatriks {
     }
 
     public static double[][] getUserInput(Scanner scanner) {
+        scanner.useLocale(Locale.US);
         StringBuilder text = new StringBuilder();
         System.out.println("Masukkan matriks:");
         while (scanner.hasNextLine()) {
@@ -97,6 +99,7 @@ public class IOMatriks {
     }
 
     public static void saveToFile(String text, Scanner scanner) {
+        scanner.useLocale(Locale.US);
         System.out.println("\nSimpan Hasil ke File?");
         System.out.println("1. Ya");
         System.out.println("2. Tidak");

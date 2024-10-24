@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class InterpolasiBicubicSpline {
@@ -20,6 +21,7 @@ public class InterpolasiBicubicSpline {
     }
 
     public static void handleInput(Scanner scanner) {
+        scanner.useLocale(Locale.US);
         System.out.println("Pilihan Input");
         System.out.println("1. Keyboard");
         System.out.println("2. File");
