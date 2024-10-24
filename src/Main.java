@@ -35,7 +35,7 @@ public class Main {
                     break;
                 case 4:
                     clearConsole();
-                    // Call method
+                    InterpolasiPolinom.main(new String[0]);
                     break;
                 case 5:
                     clearConsole();
@@ -43,7 +43,7 @@ public class Main {
                     break;
                 case 6:
                     clearConsole();
-                    // Call method
+                    RegresiBerganda.main(new String[0]);
                     break;
                 case 7:
                     System.out.println("Keluar dari program.");
