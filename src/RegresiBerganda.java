@@ -1,3 +1,5 @@
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.Locale;
 import java.util.Scanner;
 
@@ -72,9 +74,6 @@ public class RegresiBerganda {
         for (i = 0; i < nInteractionVar; i++){
             newSearchX[i + nLinearVar + nQuadraticVar] = searchX[i % nLinearVar]*searchX[(i + 1) % nLinearVar];
         } 
-        for (i = 0; i < newSearchX.length; i++){
-            System.out.print(newSearchX[i] + " ");
-        }
         return newSearchX;
     }
 
@@ -103,7 +102,6 @@ public class RegresiBerganda {
         double[][] Y = OBE.splitMatrix(augmentedData)[1];
 
         double[][] solution = multipleRegressionSolution(X, Y);
-        IOMatriks.writeMatrix(solution);
         result += solution[0][0];
         for (i = 1; i < solution.length; i++){
             result += solution[i][0]*searchX[i-1];
@@ -177,52 +175,63 @@ public class RegresiBerganda {
                 break;
 
             case 2:
-                // Main.clearConsole();
-                // System.out.print("Masukkan file path: ");
-                // String filePath = scanner.nextLine();
-                // try {
-                //     Scanner fileScanner = new Scanner(new File(filePath));
-                //     fileScanner.useLocale(Locale.US);
+                Main.clearConsole();
+                System.out.print("Masukkan file path: ");
+                String filePath = scanner.nextLine();
+                try {
+                    Scanner fileScanner = new Scanner(new File(filePath));
+                    fileScanner.useLocale(Locale.US);
 
-                //     m = 0; //print line count
-                //     while (fileScanner.hasNextLine()) {
-                //         fileScanner.nextLine();
-                //         m += 1;
-                //     } m--;
+                    m = 0; //print line count
+                    while (fileScanner.hasNextLine()) {
+                        fileScanner.nextLine();
+                        m += 1;
+                    }
+                    fileScanner.close();
 
-                //     fileScanner.close();
-                //     n = 0;
+                    // n = jumlah elemen dibagi baris
+                    n = 0;
 
-                //     fileScanner = new Scanner(new File(filePath));
-                //     while (fileScanner.hasNext()) {
-                //         fileScanner.next();
-                //         n += 1;
-                //     } n--; n /= m;
-                //     System.out.println(n);
-                //     dataX = new double[m][n];
-                //     fileScanner.close();
+                    fileScanner = new Scanner(new File(filePath));
+                    while (fileScanner.hasNext()) {
+                        fileScanner.next();
+                        n += 1;
+                    } n++; // Elemen kosong dianggap ada
+                    n /= m;
+                    m--; // Kembalikan jumlah baris sebagaimana sebenarnya
+            
+                    dataX = new double[m][n];
+                    dataY = new double[m][1];
+                    fileScanner.close();
 
-                //     fileScanner = new Scanner(new File(filePath));
-                //     fileScanner.useLocale(Locale.US);
+                    fileScanner = new Scanner(new File(filePath));
+                    fileScanner.useLocale(Locale.US);
 
-                //     for (i = 0; i < m; i++) {
-                //         for (j = 0; j < n; j++) {
-                //             if (fileScanner.hasNextDouble()) dataX[i][j] = fileScanner.nextDouble();
-                //         }
-                //     } 
+                    for (i = 0; i < m; i++) {
+                        for (j = 0; j < n; j++) {
+                            if (fileScanner.hasNextDouble()) dataX[i][j] = fileScanner.nextDouble();
+                        }
+                    } 
 
-                //     val = new double[n - 1];
+                    double[][][] splitted = OBE.splitMatrix(dataX);
+                    dataX = splitted[0];
+                    dataY = splitted[1];
+
+                    val = new double[n - 1];
                     
-                //     for (i = 0; i < n; i++) {
-                //         if (fileScanner.hasNextDouble()) val[i] = fileScanner.nextDouble();
-                //     }
-                //     fileScanner.close();
+                    for (i = 0; i < n - 1; i++) {
+                        if (fileScanner.hasNextDouble()){
+                            val[i] = fileScanner.nextDouble();
+                        }
+                    }
+                    System.out.println("Enter any input to continue..");
+                    fileScanner.close();
                     
-                // } catch (FileNotFoundException e) {
-                //     System.out.println("File tidak ditemukan: " + filePath);
-                //     return;
-                // }
-                // break;
+                } catch (FileNotFoundException e) {
+                    System.out.println("File tidak ditemukan: " + filePath);
+                    return;
+                }
+                break;
             default:
                 System.out.println("Pilihan invalid!");
                 return;
@@ -230,7 +239,7 @@ public class RegresiBerganda {
     }
 
     private static void processRegression(double[][] X, double[][] Y, double[] searchX, Scanner scanner, int regressionChoice){
-        int i;
+        int i, j;
         double[][] augmented;
         double[] newSearchX;
         String regressionType;
@@ -270,6 +279,28 @@ public class RegresiBerganda {
             }
         }
 
+        //Handle print kuadratik
+        if (regressionChoice == 2){
+            String[] var = new String[newSearchX.length]; //generate original variable
+            for (i = 0; i < searchX.length; i++){
+                var[i] = "x" + (i + 1);
+            }
+
+            for (i = searchX.length; i < 2*searchX.length; i++){
+                var[i] = "x" + (i - searchX.length + 1) + "^2";
+            }
+
+            for (i = 0; i < newSearchX.length - 2*searchX.length ; i++){
+                var[i + 2*searchX.length] = "x" + (i + 1) + "*x" + (((i + 1) % searchX.length + 1));
+            }
+
+            System.out.println("\nDengan definisi:");
+            function += "\nDengan definisi:\n";
+            for (i = 1; i < newSearchX.length + 1; i++){
+                System.out.println("x"+ i + " = " + var[i-1]);
+                function += "x"+ i + " = " + var[i-1] + "\n";
+            }
+        }
 
         System.out.println("\nNilai regresi " + regressionType + " bergandanya adalah: ");
         String regressionValue = "p(" + searchX[0];
@@ -287,56 +318,5 @@ public class RegresiBerganda {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
         handleInput(scanner);
-        // double[][] X = 
-        // {{4, 7},
-        // {4.5, 8},
-        // {5, 10},
-        // {5.5, 7},
-        // {6, 9},
-        // {6.5, 3},
-        // {7, 8}
-        // };
-        // double[][] Y = 
-        // {{33},
-        // {42},
-        // {45},
-        // {51},
-        // {53},
-        // {61},
-        // {62}
-        // };
-        //Harusnya hasilnya 1.06548 + 9.29762X1 - 0.35417X2
-    
-
-    //     Scanner scanner = new Scanner(System.in);
-    //     while (true) {
-    //         System.out.println("Regresi tipe apa yang ingin dilakukan?");
-    //         System.out.println("1. Regresi Linear Berganda");
-    //         System.out.println("2. Regresi Kuadratik Berganda");
-    //         System.out.println("5. Keluar");
-    //         int choice = scanner.nextInt();
-    //         scanner.nextLine(); // Consume newline
-
-    //         switch (choice) {
-    //             //Selesai dipakai, kembali ke menu agar dapat digunakan kembali
-    //             case 1:
-    //                 RegresiBerganda.gauss();
-    //                 return;
-    //             case 2:
-    //                 RegresiBerganda.gaussJordan();
-    //                 return;
-    //             case 3:
-    //                 RegresiBerganda.matriksBalikan();
-    //                 return;
-    //             case 4:
-    //                 RegresiBerganda.cramer();
-    //                 return;
-    //             case 5:
-    //                 scanner.close();
-    //                 return;
-    //             default:
-    //                 System.out.println("Pilihan Invalid.");
-    //         }
-    //     }
     }   
 }
