@@ -19,7 +19,7 @@ public class SPL {
         }
 
         return x;
-    }  
+    }
     
     //Input: Augmented Matrix
     static double[][] gauss(double[][] matrix){
@@ -59,12 +59,76 @@ public class SPL {
                 tmpMatrix[j][i] = rhs[j][0];
             } result[i][0] = Determinan.getDeterminan(tmpMatrix, "kofaktor") / Determinan.getDeterminan(lhs, "kofaktor");
         } return result;
-    }   
+    }  
+    
+    public static boolean hasLeadingOne(double[][] matrix, int col){
+        int i, j;
+        boolean hasLeadingOne = false;
+        for (i = 0; i < matrix.length; i++){
+            if (matrix[i][col] != 0){
+                hasLeadingOne = true;
+                for (j = col - 1; j >= 0; j--){
+                    if (matrix[i][j] != 0){
+                        hasLeadingOne = false;
+                    }
+                }
+                if (hasLeadingOne) return true;
+            }
+        } return hasLeadingOne;
+    }
 
-    public static void printParametrik(double[][] OBEmatrix){
-        for (int i = 0; i < OBEmatrix.length; i++){
-            System.out.println("x" + i + " = " + OBEmatrix[i][0]);
+    public static int checkSolution(double[][] OBEmatrix){
+        int i;
+        int m = OBEmatrix.length;
+        int n = OBEmatrix[0].length;
+        int count = 0;
+        for (i = 0; i < (n - 1); i++){
+            if (OBEmatrix[m - 1][i] == 0){
+                count += 1;
+            }
         }
+
+        for (i = 0; i < n; i++){
+            if (!(hasLeadingOne(OBEmatrix, i))) {
+                return 1; //Many Solution
+            }
+        } if (count == (n - 1) && OBEmatrix[m - 1][n - 1] != 0){
+            return 2; //No Solution
+        } return 3; //Normal Solution
+    }
+
+    public static Parametrik[] parametrikBackSub(double[][] OBEmatrix){
+        int i, j;
+        int m = OBEmatrix.length;
+        int n = OBEmatrix[0].length;
+        Parametrik[] solutions = new Parametrik[n - 1];
+        int k = 44;
+
+        for (i = 0; i < n - 1; i++){
+            if (!(hasLeadingOne(OBEmatrix, i))) {
+                solutions[i] = new Parametrik();
+                solutions[i].coeffList[k] = 1;
+                k = Parametrik.nextIndexParametrik(k);
+            }
+        }
+
+        for (i = m - 1; i >= 0; i--){
+            int indexTemp = 0;
+            if (solutions[i] == null) solutions[i] = new Parametrik();
+            solutions[i].coeffList[0] = OBEmatrix[i][n - 1];
+            for (j = 0; j < n - 1; j++){
+                if (OBEmatrix[i][j] != 0){
+                    solutions[j] = new Parametrik();
+                    solutions[j].coeffList[0] = OBEmatrix[i][n - 1];
+                    indexTemp = j;
+                    break;
+                }
+            } for (j = indexTemp + 1; j < n - 1; j++){
+                if (OBEmatrix[i][j] != 0){
+                    solutions[indexTemp] = Parametrik.subtractParametrik(solutions[indexTemp], Parametrik.multiplyConstant(solutions[j], OBEmatrix[i][j]));
+                }
+            }
+        } return solutions;
     }
 
     public static void handleInput(Scanner scanner) {
@@ -158,6 +222,7 @@ public class SPL {
                     } fileScanner.close();
 
                     IOMatriks.writeMatrix(data);
+                    System.out.println("");
                     
                 } catch (FileNotFoundException e) {
                     System.out.println("File tidak ditemukan: " + filePath);
@@ -176,44 +241,90 @@ public class SPL {
         double[][] result = null;
         switch (methodChoice){
             case 1:
-                IOMatriks.writeMatrix(OBE.toRowEchelon(setOfPoints));
-                result = gauss(setOfPoints);
-                System.out.println("Hasil penyelesaian dengan metode Gauss adalah: ");
+                result = OBE.toRowEchelon(setOfPoints);
+                IOMatriks.writeMatrix(result);
+                if (checkSolution(result) == 1){
+                    solution += "Banyak solusi, solusi parametrik:\n";
+                    System.out.println("Banyak solusi, solusi parametrik:");
+                    Parametrik[] solutions = parametrikBackSub(result);
+                    for (i = 0; i < solutions.length; i++){
+                        solution += "x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]) + "\n";
+                        System.out.println("x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]));
+                    }
+
+                } else if (checkSolution(result) == 2){
+                    solution += "Tidak ada solusi.";
+                    System.out.println("Tidak ada solusi.");
+
+                } else {
+                    solution += "Solusi unik hasil penyelesaian dengan metode Gauss adalah: \n";
+                    System.out.println("Solusi unik hasil penyelesaian dengan metode Gauss adalah: ");
+                    double[][] solutions = BackSubstitution(result);
+                    for (i = 0; i < solutions.length; i++){
+                        solution += "x" + (i+1) + " = " + solutions[i][0] + "\n";
+                        System.out.println("x" + (i+1) + " = " + solutions[i][0]);
+                    }
+                }
                 break;
             case 2:
-                IOMatriks.writeMatrix(OBE.toReducedRowEchelon(setOfPoints));
-                result = gaussJordan(setOfPoints);
-                System.out.println("Hasil penyelesaian dengan metode Gauss-Jordan adalah: ");
+                result = OBE.toReducedRowEchelon(setOfPoints);
+                IOMatriks.writeMatrix(result);
+                if (checkSolution(result) == 1){
+                    solution += "Banyak solusi, solusi parametrik:\n";
+                    System.out.println("Banyak solusi, solusi parametrik:");
+                    Parametrik[] solutions = parametrikBackSub(result);
+                    for (i = 0; i < solutions.length; i++){
+                        solution += "x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]) + "\n";
+                        System.out.println("x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]));
+                    }
+
+                } else if (checkSolution(result) == 2){
+                    solution += "Tidak ada solusi.";
+                    System.out.println("Tidak ada solusi.");
+
+                } else {
+                    solution += "Solusi unik hasil penyelesaian dengan metode Gauss adalah: \n";
+                    System.out.println("Solusi unik hasil penyelesaian dengan metode Gauss adalah: ");
+                    double[][] solutions = BackSubstitution(result);
+                    for (i = 0; i < solutions.length; i++){
+                        solution += "x" + (i+1) + " = " + solutions[i][0] + "\n";
+                        System.out.println("x" + (i+1) + " = " + solutions[i][0]);
+                    }
+                }
                 break;
 
             case 3:
                 if (!OBE.isSquare(OBE.splitMatrix(setOfPoints)[0])){
                     System.out.println("Matriks koefisien tidak persegi, tidak bisa menggunakan metode invers.");
-                    return;
+                    solution += "Matriks koefisien tidak persegi, tidak bisa menggunakan metode invers.";
+                    break;
                 }
 
                 if (!OBE.isInversable(OBE.splitMatrix(setOfPoints)[0])){
                     System.out.println("Determinan matriks sama dengan 0, tidak bisa menggunakan metode invers.");
-                    return;
+                    solution += "Determinan matriks sama dengan 0, tidak bisa menggunakan metode invers.";
+                    break;
                 }
 
                 result = matriksBalikan(setOfPoints);
                 System.out.println("Hasil penyelesaian dengan metode Invers adalah: ");
                 for (i = 0; i < result[0].length; i++){
-                    solution += "x" + i + " = " + result[i][0] + "\n";
-                    System.out.println("x" + i + " = " + result[i][0]);
+                    solution += "x" + (i+1) + " = " + result[i][0] + "\n";
+                    System.out.println("x" + (i+1) + " = " + result[i][0]);
                 }
                 break;
 
             case 4:
                 if (!OBE.isSquare(OBE.splitMatrix(setOfPoints)[0])){
                     System.out.println("Matriks koefisien tidak persegi, tidak bisa menggunakan metode cramer.");
-                    return;
+                    solution += "Matriks koefisien tidak persegi, tidak bisa menggunakan metode cramer.";
+                    break;
                 }
 
                 if (!OBE.isInversable(OBE.splitMatrix(setOfPoints)[0])){
                     System.out.println("Determinan matriks sama dengan 0, tidak bisa menggunakan metode cramer.");
-                    return;
+                    solution += "Determinan matriks sama dengan 0, tidak bisa menggunakan metode cramer.";
+                    break;
                 }
 
                 result = cramer(setOfPoints);
