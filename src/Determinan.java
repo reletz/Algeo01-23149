@@ -14,6 +14,7 @@ public class Determinan {
 
     public static double determinanOBE(double[][] matrix) {
         int det = 1;
+        int swabCount = 0;
 
         int pivotRow, col, i;
         col = matrix.length;
@@ -21,7 +22,10 @@ public class Determinan {
         for (i = 0; i < col; i++) {
             int nonZeroRow = OBE.nonZeroRowCheck(matrix, pivotRow, i);
             if (nonZeroRow != -1) {
-                OBE.rowSwap(matrix, pivotRow, nonZeroRow);
+                if (pivotRow != nonZeroRow) {
+                    OBE.rowSwap(matrix, pivotRow, nonZeroRow);
+                    swabCount += 1;
+                }
                 // rowMultiply(matrix, pivotRow, i);
                 OBE.rowSubstract(matrix, pivotRow, i);
                 pivotRow += 1;
@@ -33,7 +37,7 @@ public class Determinan {
             det *= matrix[i][i];
             // System.out.println("det: " + det);
         }
-        return det;
+        return det *= Math.pow(-1, swabCount);
     }
     
     public static double determinanKofaktor(double[][] matrix){
@@ -81,17 +85,27 @@ public class Determinan {
             case 1:
                 Main.clearConsole();
                 inputMatrix = IOMatriks.getUserInput(scanner);
-                determinant = getDeterminan(inputMatrix, function);
-                System.out.println("Determinan: " + determinant);
-                break;
+                if (OBE.isSquare(inputMatrix) == false) {
+                    System.out.println("Tidak bisa dicari determinan karena matriks bukan matriks persegi!");
+                    break;
+                } else {
+                    determinant = getDeterminan(inputMatrix, function);
+                    System.out.println("Determinan: " + determinant);
+                    break;
+                }
             case 2:
                 Main.clearConsole();
                 System.out.print("Masukkan file path: ");
                 String filePath = scanner.nextLine();
                 inputMatrix = IOMatriks.readFile(filePath);
-                determinant = getDeterminan(inputMatrix, function);
-                System.out.println("Determinan: " + determinant);
-                break;
+                if (OBE.isSquare(inputMatrix) == false) {
+                    System.out.println("Tidak bisa dicari determinan karena matriks bukan matriks persegi!");
+                    break;
+                } else {
+                    determinant = getDeterminan(inputMatrix, function);
+                    System.out.println("Determinan: " + determinant);
+                    break;
+                }
             default:
                 System.out.println("Pilihan invalid!");
                 break;

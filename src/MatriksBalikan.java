@@ -17,7 +17,7 @@ public class MatriksBalikan {
 
     public static double[][] getInvers(double[][] matrix, String function) {
         double[][] copy = OBE.copyMatrix(matrix);
-        double det = Determinan.determinanOBE(copy);
+        double det = Determinan.determinanKofaktor(copy);
         if (det == 0) {
             System.out.println("Matrix berupa matriks singular dan tidak memiliki invers.");
             return new double[0][0];
@@ -58,7 +58,7 @@ public class MatriksBalikan {
     public static double[][] inversAdjoin(double[][] matrix) {
         double[][] matrixInvers = OBE.transpose(getMatriksKofaktor(matrix));
         double[][] copy = OBE.copyMatrix(matrix);
-        double det = Determinan.determinanOBE(copy);
+        double det = Determinan.determinanKofaktor(copy);
         return multiplyByCoef(matrixInvers, 1 / det);
     }
 
