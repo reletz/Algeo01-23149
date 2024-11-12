@@ -125,9 +125,14 @@ public class SPL {
             }
         }
         if (count == (n - 1) && OBEmatrix[m - 1][n - 1] != 0){
-            return 2; //No Solution
+            return 0; //No Solution
         }
-        return 1; //Normal Solution
+
+        if (count == (n - 1) && OBEmatrix[m - 1][n - 1] == 0){
+            return 2; //Infinite Solution
+        }
+
+        return 1; //Unique Solution
     }
 
     public static Parametrik[] parametrikBackSub(double[][] OBEmatrix){
@@ -277,7 +282,7 @@ public class SPL {
                 double[][] temp = addZero(setOfPoints);
                 int diff = (temp[0].length - setOfPoints[0].length) > 0 ? (temp[0].length - setOfPoints[0].length) : 0;
                 result = OBE.toRowEchelon(temp);
-                if (checkSolution(result) == 1){
+                if (checkSolution(result) != 0){
                     solution += "Solusi:\n";
                     System.out.println("Solusi:");
                     Parametrik[] solutions = parametrikBackSub(result);
@@ -286,7 +291,7 @@ public class SPL {
                         System.out.println("x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]));
                     }
 
-                } else if (checkSolution(result) == 2){
+                } else {
                     solution += "Tidak ada solusi.";
                     System.out.println("Tidak ada solusi.");
 
@@ -296,7 +301,7 @@ public class SPL {
                 temp = addZero(setOfPoints);
                 diff = (temp[0].length - setOfPoints[0].length) > 0 ? (temp[0].length - setOfPoints[0].length) : 0;
                 result = OBE.toReducedRowEchelon(temp);
-                if (checkSolution(result) == 1){
+                if (checkSolution(result) != 0){
                     solution += "Solusi:\n";
                     System.out.println("Solusi:");
                     Parametrik[] solutions = parametrikBackSub(result);
@@ -305,10 +310,9 @@ public class SPL {
                         System.out.println("x" + (i+1) + " = " + Parametrik.makeVar(solutions[i]));
                     }
 
-                } else if (checkSolution(result) == 2){
+                } else {
                     solution += "Tidak ada solusi.";
                     System.out.println("Tidak ada solusi.");
-
                 } 
                 break;
 
