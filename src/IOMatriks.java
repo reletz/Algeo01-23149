@@ -78,7 +78,7 @@ public class IOMatriks {
                 if (element == -0.0) {
                     element = 0.0;
                 }
-                System.out.printf("%8.3f", element);
+                System.out.printf("%8.5f", element);
             }
             System.out.println();
         }
