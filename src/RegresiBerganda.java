@@ -90,8 +90,13 @@ public class RegresiBerganda {
 
         //Finding B
         double[][] augmented = OBE.toAugmented(XTX, XTY);
+        
+        if (SPL.checkSolution(OBE.toRowEchelon(augmented)) != 1){
+            return new double[][] {{-9999}};
+        }
 
         double[][] B = SPL.gauss(augmented);
+        
         return B;
     }
 
@@ -102,6 +107,10 @@ public class RegresiBerganda {
         double[][] Y = OBE.splitMatrix(augmentedData)[1];
 
         double[][] solution = multipleRegressionSolution(X, Y);
+        if (solution[0][0] == -9999){
+            return new double[][][] {{{-9999}}, {{-9999}}};
+        }
+        
         result += solution[0][0];
         for (i = 1; i < solution.length; i++){
             result += solution[i][0]*searchX[i-1];
@@ -127,7 +136,7 @@ public class RegresiBerganda {
             scanner.close();
             return;
         }
-
+    
         System.out.println("Pilihan Input");
         System.out.println("1. Keyboard");
         System.out.println("2. File");
@@ -147,10 +156,6 @@ public class RegresiBerganda {
                 n = scanner.nextInt();
                 System.out.print("Masukkan m (jumlah data): ");
                 m = scanner.nextInt();
-                if (m < 2) {
-                    System.out.println("Jumlah data tidak cukup untuk melakukan regresi.");
-                    return;
-                }
                 
                 dataX = new double[m][n];
                 dataY = new double[m][1];
@@ -203,11 +208,6 @@ public class RegresiBerganda {
                     dataX = new double[m][n];
                     dataY = new double[m][1];
                     fileScanner.close();
-
-                    if (m < 2) {
-                        System.out.println("Jumlah data tidak cukup untuk melakukan regresi.");
-                        return;
-                    }
 
                     fileScanner = new Scanner(new File(filePath));
                     fileScanner.useLocale(Locale.US);
@@ -262,7 +262,16 @@ public class RegresiBerganda {
             newSearchX = searchX;
             regressionType = "linear";
         } //Default: Linear
+
         double result[][][] = multipleRegressionSolver(augmented, newSearchX);
+        IOMatriks.writeMatrix(result[0]);
+
+        if (result[0][0][0] == -9999){
+            System.out.println("Solusi regresi tidak ada.");
+            IOMatriks.saveToFile("\nSolusi regresi tidak ada.\n", scanner);
+            return;
+        }
+
         System.out.println("Fungsi regresi " + regressionType + " berganda yang memungkinkan adalah: ");
 
         String regressionParameters = "p(x1";

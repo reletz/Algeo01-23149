@@ -15,12 +15,22 @@ public class InterpolasiPolinom {
             }
             augmentedMatrix[i][n] = pointMatrix[i][1];
         } 
+
+        if (SPL.checkSolution(augmentedMatrix) != 1) {
+            return new double[][] {{-9999}};
+        }
+
         return SPL.gauss(augmentedMatrix);
     }
 
     private static double[][][] polinomialInterpolation(double[][] pointMatrix, double x){
         double result = 0;
         double[][] solution = interpolationSolution(pointMatrix);
+
+        if (solution[0][0] == -9999){
+            return new double[][][] {{{-9999}}, {{-9999}}};
+        }
+
         for (int i = 0; i < solution.length; i++){
             result += solution[i][0] * Math.pow(x, i);
         } return new double[][][] {solution, new double[][] {{result}}};
@@ -100,6 +110,12 @@ public class InterpolasiPolinom {
     private static void processInterpolation(double[][] setOfPoints, double x, Scanner scanner){
         int i;
         double result[][][] = polinomialInterpolation(setOfPoints, x);
+        if (result[0][0][0] == -9999){
+            System.out.println("Tidak ada fungsi interpolasi yang memungkinkan.");
+            IOMatriks.saveToFile("Tidak ada fungsi interpolasi yang memungkinkan.", scanner);
+            return;
+        }
+
         System.out.println("Fungsi interpolasi yang memungkinkan adalah: ");
         String function = "p" + (setOfPoints.length-1) + "(x) = " + + result[0][0][0];
         System.out.print(function);
