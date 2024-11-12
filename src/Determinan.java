@@ -14,6 +14,7 @@ public class Determinan {
 
     public static double determinanOBE(double[][] matrix) {
         int det = 1;
+        int j = 0;
 
         int pivotRow, col, i;
         col = matrix.length;
@@ -22,6 +23,7 @@ public class Determinan {
             int nonZeroRow = OBE.nonZeroRowCheck(matrix, pivotRow, i);
             if (nonZeroRow != -1) {
                 OBE.rowSwap(matrix, pivotRow, nonZeroRow);
+                j++;
                 // rowMultiply(matrix, pivotRow, i);
                 OBE.rowSubstract(matrix, pivotRow, i);
                 pivotRow += 1;
@@ -33,7 +35,7 @@ public class Determinan {
             det *= matrix[i][i];
             // System.out.println("det: " + det);
         }
-        return det;
+        return det * Math.pow(-1, j);
     }
     
     public static double determinanKofaktor(double[][] matrix){
